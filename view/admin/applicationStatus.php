@@ -50,17 +50,17 @@ include_once "../../static/conn.php";
                       <form id="applicationStatusForm" class="forms-sample" method="post">
                         <div class="form-group">
                           <label for="applicationStatusId">Application Status Id</label>
-                          <input type="text" class="form-control" id="applicationStatusId" required>
+                          <input type="text" class="form-control form-control-application-status form" name="applicationStatusId" id="applicationStatusId">
                         </div>
                         <div class="form-group">
                           <label for="applicationStatusName">Application Status</label>
-                           <input type="text" id="applicationStatusName" class="form-control">
+                           <input type="text" id="applicationStatusName" name ="applicationStatusName" class="form-control form-control-application-status">
                         </div>
                         <div class="form-group">
                           <label for="applicationStatusDescription">Application Status Description</label>
-                          <textarea class="form-control" id="applicationStatusDescription" rows="4" required></textarea>
+                          <textarea class="form-control form-control-application-status" name ="applicationStatusDescription" id="applicationStatusDescription" rows="4"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary mr-2" id="addApplicationStatusSubmitBtn">Submit</button>
+                        <button type="button" class="btn btn-primary mr-2" id="addApplicationStatusSubmitBtn">Submit</button>
                         <button type="button" class="btn btn-dark" id="cancelBtn">Cancel</button>
                       </form>
                       <div id="feedback" class="mt-3"></div>
@@ -84,7 +84,6 @@ include_once "../../static/conn.php";
     <!-- plugins:js -->
     
     <script src="../../assets/js/jquery-3.7.1.min.js"></script>
-    <script src="../../philippine-address-selector-main/ph-address-selector.js"></script>
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -109,54 +108,87 @@ include_once "../../static/conn.php";
 
 
 <script>
-$(document).ready(function() {
-  $('#applicationStatusForm').submit(function(e) {
-    e.preventDefault(); // Prevent default form submission
+  
+  $('#applicationStatusId').prop('disabled', true)
 
-    // Serialize form data
-    var formData = {
-      id: $('#applicationStatusId').val(),
-      name: $('#applicationStatusName').val(),
-      description: $('#applicationStatusDescription').val()
-    };
-
-    // Send AJAX request
+  //GENERATE APPLICATION STATUS ID
+  function generateId(){
     $.ajax({
-      type: 'POST',
-      url: "../../controller/application_status_management/addApplicationStatus.php", // Update the path
-      data: formData,
-      dataType: 'json', // Expect JSON response from the server
-      success: function(response) {
-        // Handle successful response
-        $('#feedback').html('<div class="alert alert-success">Data added successfully!</div>');
-        $('#applicationStatusForm')[0].reset(); // Reset form
-        // Example function to fetch latest ID or perform other actions
-        fetchLatestId();
+      url: "../../controller/application_status_management/generateApplicationStatusId.php",
+      type: "POST",
+      data:{},
+      success: function(response){
+        console.log(response.trim());
+        $('#applicationStatusId').val(response.trim());
       },
-      error: function(xhr, status, error) {
-        // Handle error
-        console.error(xhr.responseText);
-        $('#feedback').html('<div class="alert alert-danger">Error adding data. Please try again.</div>');
+      error: function(xhr, status, error){
+
       }
-    });
-  });
-});
-</script>
+    })
+  }
+  //END OF GENERATE APPLICATION STATUS ID
 
-<script>
-  // Cancel button click handler
-  $('#cancelBtn').click(function(e) {
+  //ADDING DOCUMENT APPLICATION STATUS
+  function addDocumentApplicationStatus(){
+    $.ajax({
+      url: "../../controller/application_status_management/addApplicationStatus.php",
+      type: "POST",
+      data:{
+        applicationStatusId: $('#applicationStatusId').val().trim(),
+        applicationStatusName: $('#applicationStatusName').val().trim(),
+        applicationStatusDescription: $('#applicationStatusDescription').val().trim(),
+      },
+      dataType: 'json',
+      success: function(response){
+        console.log(response);
+        if(response.status === "success"){
+          generateId();
+          $('#applicationStatusName').val("");
+          $('#applicationStatusDescription').val("");
+          alert("NAIDAGDAG ANG APP STATUS")
+        }
+   
+      },
+      error: function(xhr, status, error){
+        console.log(xhr)
+      }
+    })
+  }
+  //END OF ADDING DOCUMENT APPLICATION STATUS  
+  generateId();
+
+  //VALIDATION OF FIELDS
+  function isEmptyField(){
+    var isEmptyField = false;
+    if($('#applicationStatusName').val().trim() === ""){
+      var isEmptyField = true;
+    }
+
+    if($('#applicationStatusDescription').val().trim() === ""){
+      var isEmptyField = true;
+    }
+    return isEmptyField;
+  }
+  //END OF VALIDATION OF FIELDS
+
+  //SUBMIT BUTTON FUNCTION
+  $('#addApplicationStatusSubmitBtn').on('click', function(e){
     e.preventDefault();
-    $('#applicationStatusForm')[0].reset();
-    $('#feedback').empty();
-    fetchLatestId();
-  });
 
-  database->fetch all record
-    -if none (default = 1)
-    -if exist(latest 1+1)
-    
+    if(isEmptyField()){
+      alert('Empty Field')
+      
+    }else{
+      addDocumentApplicationStatus();
+    }
+  })
+
+  //END OF SUBMIT BUTTON FUNCTION
+
+
 </script>
+
+
 
   </body>
 </html>
