@@ -556,6 +556,7 @@ session_start();
             $.ajax({
                 url:'../../controller/user_management/addUser.php',
                 type:'POST',
+                dataType: 'json',
                 data:{
                     addUserLevel: $('#userAddInputUserLevel').val().trim(),
                     addUserDepartment: $('#userAddInputUserDepartment').val().trim(),
@@ -577,7 +578,11 @@ session_start();
                 },
 
                 success: function(response){
-                    console.log(response)
+                    if(response.message ==="User successfully added!"){
+                        alert('User added successfully!');
+                    }else{
+                        alert('There is already an existing record with the same email!');
+                    }
                 },
                 error: function(xhr, status, error){
                     console.error(xhr); // Log the full XHR object for detailed error information
@@ -674,6 +679,10 @@ session_start();
                 $(this).addClass('is-valid');
             }
         });        
+
+        $('#userAddInputBirthDate').on('change', function(){
+            console.log($(this).val())
+        })
         //END OF BIRTHDATE CONTROLS
 
         //PASSWORD INFORMATION RECOMMENDATION CONTROL
