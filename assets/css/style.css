@@ -7495,7 +7495,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #ffffff;
+  color: black;
   text-align: left;
   background-color: #fff; }
 
@@ -7513,7 +7513,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem; 
+  color: black;}
 
 abbr[title],
 abbr[data-original-title] {
@@ -7639,6 +7640,7 @@ button,
 select,
 optgroup,
 textarea {
+
   margin: 0;
   font-family: inherit;
   font-size: inherit;
@@ -7656,7 +7658,8 @@ select {
   cursor: pointer; }
 
 select {
-  word-wrap: normal; }
+  word-wrap: normal; 
+}
 
 button,
 [type="button"],
@@ -9163,8 +9166,9 @@ textarea.is-valid.tt-hint {
 .was-validated .tt-query:invalid,
 .was-validated .tt-hint:invalid, .form-control.is-invalid, .is-invalid.asColorPicker-input, .dataTables_wrapper select.is-invalid, .jsgrid .jsgrid-table .jsgrid-filter-row input.is-invalid[type=text],
 .jsgrid .jsgrid-table .jsgrid-filter-row select.is-invalid, .jsgrid .jsgrid-table .jsgrid-filter-row input.is-invalid[type=number], .select2-container--default .is-invalid.select2-selection--single, .select2-container--default .select2-selection--single .is-invalid.select2-search__field, .is-invalid.typeahead,
-.is-invalid.tt-query,
+.is-invalid.tt-query, select.is-invalid,
 .is-invalid.tt-hint {
+  border: solid 1px;
   border-color: #dc3545;
   padding-right: calc(1.5em + 0.75rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
@@ -15596,7 +15600,10 @@ body {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: 500; }
+  font-weight: 500;
+  color: black;
+ }
+
 
 p {
   font-size: 0.875rem; }
@@ -16977,8 +16984,10 @@ select.form-control, select.asColorPicker-input, .dataTables_wrapper select,
 select.tt-query,
 select.tt-hint {
   padding: .4375rem .75rem;
-  border: 0;
-  color: #4b5564; }
+  /* border: 0;
+  color: #4b5564;*/
+  }/*BABALIKAN KITA*/ 
+  
   select.form-control:focus, select.asColorPicker-input:focus, .dataTables_wrapper select:focus,
   .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .select2-container--default select.select2-selection--single:focus, .select2-container--default .select2-selection--single select.select2-search__field:focus, select.typeahead:focus,
   select.tt-query:focus,

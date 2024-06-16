@@ -73,6 +73,10 @@ session_start();
                                         <input type="email" class="form-control" id="userAddInputEmail" placeholder="Email">
                                     </div>
                                     <div class="form-group">
+                                        <label for="userAddInputPhoneNumber">Phone Number</label>
+                                        <input type="text" class="form-control" id="userAddInputPhoneNumber" placeholder="PhoneNumber">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="userAddInputPassword">Password</label>
                                         <input type="password" class="form-control" id="userAddInputPassword" placeholder="Password">
                                     </div>
