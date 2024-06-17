@@ -1,5 +1,6 @@
 <?php 
-session_start();
+    include_once('../../static/session.php');
+    session_check('../../index.php');
 ?>
 
 <!DOCTYPE html>
@@ -43,112 +44,7 @@ session_start();
           <!-- content-wrapper starts-->
           <div class="content-wrapper">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-8 col-lg-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Add User</h4>
-                                <form class="forms-sample">
-                                    <div class="form-group">
-                                        <label for="userLevel">User Level</label>
-                                        <select class="form-control" id="userLevel">
-                                            <option>Admin</option>
-                                            <option>User</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lastname">Lastname</label>
-                                        <input type="text" class="form-control" id="userAddInputLastname" placeholder="Lastname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="firstname">Firstname</label>
-                                        <input type="text" class="form-control" id="userAddInputFirstname" placeholder="Firstname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="middlename">Middlename</label>
-                                        <input type="text" class="form-control" id="userAddInputMiddlename" placeholder="Middlename">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputEmail">Email Address</label>
-                                        <input type="email" class="form-control" id="userAddInputEmail" placeholder="Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputPhoneNumber">Phone Number</label>
-                                        <input type="text" class="form-control" id="userAddInputPhoneNumber" placeholder="PhoneNumber">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputPassword">Password</label>
-                                        <input type="password" class="form-control" id="userAddInputPassword" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputGender">Gender</label>
-                                        <select class="form-control" id="userAddInputGender">
-                                            <option value="" selected disabled>Select your sex:</option>
-                                            <option value="M">Male</option>
-                                            <option value="F">Female</option>
-                                        </select>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="form-label">Region *</label>
-                                        <select name="region" class="form-control form-control-md" id="region"></select>
-                                        <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Province *</label>
-                                        <select name="province" class="form-control form-control-md" id="province"></select>
-                                        <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">City / Municipality *</label>
-                                        <select name="city" class="form-control form-control-md" id="city"></select>
-                                        <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Barangay *</label>
-                                        <select name="barangay" class="form-control form-control-md" id="barangay"></select>
-                                        <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="street-text" class="form-label">Street (Optional)</label>
-                                        <input type="text" class="form-control form-control-md" name="street_text" id="street-text">
-                                    </div>                                    
-
-                                    <!-- <div class="form-group">
-                                        <label for="userAddInputRegion">Region</label>
-                                        <select name="userAddInputRegion" id="userAddInputRegion">
-                                        <option value="" selected disabled>Select your region:</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputProvince">Province</label>
-                                        <select name="userAddInputProvince" id="userAddInputProvince">
-                                        <option value="" selected disabled>Select your province:</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputCity">City/Municipality</label>
-                                        <select name="userAddInputCity" id="userAddInputCity">
-                                        <option value="" selected disabled>Select your city/municipality:</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userAddInputBarangay">City/Municipality</label>
-                                        <select name="userAddInputBarangay" id="userAddInputBarangay">
-                                        <option value="" selected disabled>Select your barangay:</option>
-                                        </select>
-                                    </div> -->
-                                    <div class="form-group">
-                                        <label for="exampleTextarea1">Textarea</label>
-                                        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
-                                    </div>
-                                    <button id="userAddSubmitBtn" class="btn btn-primary mr-2">Submit</button>
-                                    <button type="button" class="btn btn-dark">Cancel</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
           </div>
           <!-- content-wrapper ends -->

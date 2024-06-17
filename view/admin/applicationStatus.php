@@ -1,6 +1,6 @@
 <?php 
-session_start();
-include_once "../../static/conn.php";
+    include_once('../../static/session.php');
+    session_check('../../index.php');
 ?>
 
 <!DOCTYPE html>

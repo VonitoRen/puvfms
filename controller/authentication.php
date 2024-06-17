@@ -71,6 +71,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
     session_start();
     $_SESSION['userData'] = $userData;
+    $_SESSION['authenticated'] = true;
     echo implode(', ', $_SESSION['userData']);
 
 }else{
