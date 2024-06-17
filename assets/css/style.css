@@ -12302,7 +12302,8 @@ a.close.disabled {
     justify-content: center;
     height: 100%; }
     .modal-dialog-centered.modal-dialog-scrollable .modal-content {
-      max-height: none; }
+      max-height: none; 
+}
     .modal-dialog-centered.modal-dialog-scrollable::before {
       content: none; }
 
@@ -12312,11 +12313,13 @@ a.close.disabled {
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #000000;
+  background-color: white;
   background-clip: padding-box;
   border: 1px solid #2c2e33;
   border-radius: 0.3rem;
   outline: 0; }
+
+
 
 .modal-backdrop {
   position: fixed;

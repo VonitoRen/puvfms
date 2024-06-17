@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="col d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary btn-fw" id="addUserModalDisplayBtn">Add User</button>
+                            <button type="button" class="btn btn-primary btn-fw" id="addUserModalDisplayBtn" data-toggle="modal" data-target="#addUserModal">Add User</button>
                             </div>
                         </div>
 
@@ -104,31 +104,92 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="../../assets/js/jquery-3.7.1.min.js"></script>
-    <script src="../../assets/js/ph-address-selector.js"></script>
-    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="../../assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="../../assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="../../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="../../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="../../assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="../../assets/js/off-canvas.js"></script>
-    <script src="../../assets/js/hoverable-collapse.js"></script>
-    <script src="../../assets/js/misc.js"></script>
-    <script src="../../assets/js/settings.js"></script>
-    <script src="../../assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
+  <script src="../../assets/js/jquery-3.7.1.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/ph-address-selector.js"></script>
+  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../assets/vendors/chart.js/Chart.min.js"></script>
+  <script src="../../assets/vendors/progressbar.js/progressbar.min.js"></script>
+  <script src="../../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+  <script src="../../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+  <script src="../../assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../assets/js/off-canvas.js"></script>
+  <script src="../../assets/js/hoverable-collapse.js"></script>
+  <script src="../../assets/js/misc.js"></script>
+  <script src="../../assets/js/settings.js"></script>
+  <script src="../../assets/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page -->
+  <script>
+    function displayUser(){
+      $.ajax({
+      url:'../../controller/user_management/displayUser.php',
+      type: 'post',
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+        console.log('hello')
+        $('#userTableBody').empty();
 
-    <script>
-    
-     </script>
-    <!-- End custom js for this page -->
+        $.each(data, function(index, value){
+          var row = $('<tr></tr>');
+          row.append('<td>' + value.user_id + '</td>');
+          row.append('<td>' + value.fullname + '</td>');
+          row.append('<td>' + value.department_name + '</td>');
+          row.append('<td>' + value.user_status + '</td>');
+          row.append('<td>' + value.user_level_name + '</td>');
+          row.append('<td>' + value.user_created_at + '</td>');
+          row.append('<td>' + 
+          '<button type="button" class="btn btn-primary btn-fw w-25 editUserBtn" data-userid="' + value.user_id + '" data-toggle="modal" data-target="#editUserModal">Edit User</button> ' +
+          '<button type="button" class="btn btn-danger btn-fw w-25 deleteUserBtn" data-userid="' + value.user_id + '" data-toggle="modal" data-target="#deleteUserModal">Delete User</button>' +
+            '</td>');
+
+          $('#userTableBody').append(row);
+
+          // Event delegation for dynamically added buttons
+          $('#userTableBody').on('click', '.editUserBtn', function(){
+            var userId = $(this).data('userid');
+            console.log('Edit button clicked for user ID: ' + userId);
+            // Perform edit action, e.g., open modal, etc.
+          });
+
+          $('#userTableBody').on('click', '.deleteUserBtn', function(){
+            var userId = $(this).data('userid');
+            console.log('Delete button clicked for user ID: ' + userId);
+            // Perform delete action, e.g., show confirmation dialog, etc.
+          });
+         
+        });
+      },
+      error: function(xhr, status, error){
+
+      }
+    })
+
+    }
+    displayUser();
+
+    //OPEN EDIT USER MODAL
+    // Additional JavaScript to handle form submission, etc.
+    $('#editUserForm').on('submit', function(event) {
+      event.preventDefault();
+      // Handle form submission logic here
+      console.log('Edit User Form submitted');
+    });    
+    //END OF OPEN EDIT USER MODAL
+
+  </script>
+    <?php
+    include_once('userManagementEditModal.php');
+    include_once('userManagementAddModal.php');
+    ?>  
+  <!-- End custom js for this page -->
   </body>
 </html>

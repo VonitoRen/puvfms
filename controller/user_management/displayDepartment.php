@@ -3,7 +3,7 @@ include_once('../../static/conn.php');
 
 function getUserLevelData($pdo){
     try {
-        $stmt = $pdo->prepare("SELECT * FROM tbl_deparment");
+        $stmt = $pdo->prepare("SELECT * FROM tbl_department");
         $stmt->execute();
         $userLevels = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
