@@ -46,9 +46,9 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Application Status</h4>
+                        <h4 class="card-title">Hearing Status</h4>
                         <div class="d-flex justify-content-end">
-                        <button type="button" id="addBtn" class="btn btn-primary btn-fw">Add Application Status</button>
+                        <button type="button" id="addBtn" class="btn btn-primary btn-fw">Add Hearing Status</button>
                         </div>
                         <div class="table-responsive">
                         <table class="table">
@@ -61,7 +61,7 @@
                                 <th>Functions</th>
                             </tr>
                             </thead>
-                            <tbody id="applicationStatusTableBody">
+                            <tbody id="hearingStatusTableBody">
 
                             </tbody>
                         </table>
@@ -84,7 +84,7 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../assets/js/jquery-3.7.1.min.js"></script>
-
+    <script src="../../philippine-address-selector-main/ph-address-selector.js"></script>
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -116,7 +116,7 @@
         $(document).ready(function() {
             $('#addBtn').click(function() {
                 // URL to send the AJAX request to
-                var url = 'applicationStatus.php'; 
+                var url = 'hearingStatus.php'; 
 
                 // Perform the AJAX request
                 $.ajax({
@@ -126,7 +126,7 @@
                         // Handle success if needed, or directly redirect
                         console.log('AJAX request successful');
                         // Perform the redirection after successful AJAX call
-                        window.location.href = 'applicationStatus.php';
+                        window.location.href = 'hearingStatus.php';
                     },
                     error: function(xhr, status, error) {
                         console.error('Error:', status, error);
@@ -143,24 +143,24 @@
   // Displaying of DATA 
     $(document).ready(function () {
         
-        function fetchApplicationStatus() {
+        function fetchHearingStatus() {
             $.ajax({
-                url: '../../controller/application_status_management/fetchApplicationStatus.php',
+                url: '../../controller/hearing_status_management/fetchHearingStatus.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    var tbody = $('#applicationStatusTableBody');
+                    var tbody = $('#hearingStatusTableBody');
                     tbody.empty(); // Clear the table body
 
-                    data.forEach(function (applicationStatus) {
+                    data.forEach(function (hearingStatus) {
                         var row = `<tr>
-                            <td>${applicationStatus.application_status_id}</td>
-                            <td>${applicationStatus.application_status_name}</td>
-                            <td>${applicationStatus.application_status_description}</td>
-                            <td>${applicationStatus.application_status_created_at}</td>
+                            <td>${hearingStatus.hearing_status_id}</td>
+                            <td>${hearingStatus.hearing_status_name}</td>
+                            <td>${hearingStatus.hearing_status_description}</td>
+                            <td>${hearingStatus.hearing_status_created_at}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning editBtn" data-id="${applicationStatus.application_status_id}">Edit</button>
-                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${applicationStatus.application_status_id}">Delete</button>
+                                <button class="btn btn-sm btn-warning editBtn" data-id="${hearingStatus.hearing_status_id}">Edit</button>
+                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${hearingStatus.hearing_status_id}">Delete</button>
                             </td>
                         </tr>`;
                         tbody.append(row);
@@ -173,7 +173,7 @@
         }
 
         // Call fetchDocumentTypes on page load
-        fetchApplicationStatus();
+        fetchHearingStatus();
       });
    
 

@@ -2,7 +2,6 @@
     include_once('../../static/session.php');
     session_check('../../index.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,7 +47,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Document Type</h4>
                         <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary btn-fw">Add Document Type</button>
+                        <button type="button" id="addBtn" class="btn btn-primary btn-fw">Add Document Type</button>
                         </div>
                         <div class="table-responsive">
                         <table class="table">
@@ -104,13 +103,81 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-     <script>
+    <script>
         $('#logoutBtn').on('click', function(){
           alert('gumagana');
           window.location = "../../index.php";
         })
 
         
+    //Add Application Status
+  
+        $(document).ready(function() {
+            $('#addBtn').click(function() {
+                // URL to send the AJAX request to
+                var url = 'documentType.php'; 
+
+                // Perform the AJAX request
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function(data) {
+                        // Handle success if needed, or directly redirect
+                        console.log('AJAX request successful');
+                        // Perform the redirection after successful AJAX call
+                        window.location.href = 'documentType.php';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', status, error);
+                    }
+                });
+            });
+        });
+        
+    //END ADD APPLICATION STATUS
      </script>
+
+
+<script>
+
+  // Displaying of DATA 
+    $(document).ready(function () {
+        
+        function fetchDocumentTypes() {
+            $.ajax({
+                url: '../../controller/document_type_management/fetchDocumentType.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var tbody = $('#documentTypeTableBody');
+                    tbody.empty(); // Clear the table body
+
+                    data.forEach(function (documentType) {
+                        var row = `<tr>
+                            <td>${documentType.document_type_id}</td>
+                            <td>${documentType.document_type_name}</td>
+                            <td>${documentType.document_type_description}</td>
+                            <td>${documentType.document_type_created_at}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning editBtn" data-id="${documentType.document_type_id}">Edit</button>
+                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${documentType.document_type_id}">Delete</button>
+                            </td>
+                        </tr>`;
+                        tbody.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', status, error);
+                }
+            });
+        }
+
+        // Call fetchDocumentTypes on page load
+        fetchDocumentTypes();
+      });
+   
+
+  //END OF DISPLAYING DATA
+</script>
   </body>
 </html>

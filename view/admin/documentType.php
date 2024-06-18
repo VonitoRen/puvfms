@@ -49,20 +49,24 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Add Document Type</h4>
-                                <form class="forms-sample">
+
+                                <form class="forms-sample" id="documentTypeForm" method="POST">
+
                                     <div class="form-group">
                                         <label for="documentTypeIdInput">Document Type Id</label>
-                                        <input type="text" class="form-control" id="userAddInputdocumentTypeIdInput" placeholder="Document Type Id">
+                                        <input type="text" class="form-control form-control-document-type" name="documentTypeIdInput" id="documentTypeIdInput">
                                     </div>
+
                                     <div class="form-group">
                                         <label for="documentTypeNameInput">Document Type Name</label>
-                                        <input type="text" class="form-control" id="userAddInputdocumentTypeNameInput" placeholder="Document Type Name">
+                                        <input type="text" class="form-control form-control-document-type" id="documentTypeNameInput" name="documentTypeNameInput" placeholder="Document Type Name">
                                     </div>
+
                                     <div class="form-group">
                                         <label for="documentTypeDescriptionInput">Document Type Description</label>
-                                        <textarea class="form-control" id="documentTypeDescriptionInput" rows="4"></textarea>
+                                        <textarea class="form-control form-control-document-type" name="documentTypeDescriptionInput" id="documentTypeDescriptionInput" rows="4"></textarea>
                                     </div>
-                                    <button id="documentTypeSubmitBtn" class="btn btn-primary mr-2">Submit</button>
+                                    <button id="addDocumentTypeSubmitBtn" class="btn btn-primary mr-2">Submit</button>
                                     <button type="button" class="btn btn-dark">Cancel</button>
                                 </form>
                             </div>
@@ -105,5 +109,85 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+
+<script>
+  $('#documentTypeIdInput').prop('disabled', true)
+
+  //GENERATE DOCUMENT TYPE ID
+  function generateId(){
+    $.ajax({
+      url: "../../controller/document_type_management/generateDocumentTypeId.php",
+      type: "POST",
+      data:{},
+      success: function(response){
+        console.log(response.trim());
+        $('#documentTypeIdInput').val(response.trim());
+      },
+      error: function(xhr, status, error){
+
+      }
+    })
+  }
+  //END OF GENERATE APPLICATION STATUS ID
+
+  //ADDING DOCUMENT TYPE
+    function addDocumentType(){
+    $.ajax({
+      url: "../../controller/document_type_management/addDocumentType.php",
+      type: "POST",
+      data:{
+        documentTypeIdInput: $('#documentTypeIdInput').val().trim(),
+        documentTypeNameInput: $('#documentTypeNameInput').val().trim(),
+        documentTypeDescriptionInput: $('#documentTypeDescriptionInput').val().trim(),
+      },
+      dataType: 'json',
+      success: function(response){
+        console.log(response);
+        if(response.status === "success"){
+          generateId();
+          $('#documentTypeNameInput').val("");
+          $('#documentTypeDescriptionInput').val("");
+          alert("Added Successfuly!")
+        }
+   
+      },
+      error: function(xhr, status, error){
+        console.log(xhr)
+      }
+    })
+  }
+  //END OF ADDING DOCUMENT APPLICATION STATUS  
+  generateId();
+
+  //VALIDATION OF FIELDS
+    function isEmptyField(){
+      var isEmptyField = false;
+      if($('#documentTypeNameInput').val().trim() === ""){
+        var isEmptyField = true;
+      }
+
+      if($('#documentTypeDescriptionInput').val().trim() === ""){
+        var isEmptyField = true;
+      }
+      return isEmptyField;
+    }
+  //END OF VALIDATION OF FIELDS
+
+  //SUBMIT BUTTON FUNCTION
+    $('#addDocumentTypeSubmitBtn').on('click', function(e){
+      e.preventDefault();
+
+      if(isEmptyField()){
+        alert('Empty Field')
+
+      }else{
+        addDocumentType();
+      }
+    })
+
+  //END OF SUBMIT BUTTON FUNCTION
+
+</script>
+
   </body>
 </html>

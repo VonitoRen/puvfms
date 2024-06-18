@@ -48,9 +48,10 @@
                       <h4 class="card-title">Add Application Status</h4>
 
                       <form id="applicationStatusForm" class="forms-sample" method="post">
+                        
                         <div class="form-group">
                           <label for="applicationStatusId">Application Status Id</label>
-                          <input type="text" class="form-control form-control-application-status form" name="applicationStatusId" id="applicationStatusId">
+                          <input type="text" class="form-control form-control-application-status" name="applicationStatusId" id="applicationStatusId">
                         </div>
                         <div class="form-group">
                           <label for="applicationStatusName">Application Status</label>
@@ -145,7 +146,7 @@
           generateId();
           $('#applicationStatusName').val("");
           $('#applicationStatusDescription').val("");
-          alert("NAIDAGDAG ANG APP STATUS")
+          alert("Added Successfuly!")
         }
    
       },

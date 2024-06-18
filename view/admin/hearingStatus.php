@@ -49,19 +49,24 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Add Hearing Status</h4>
-                                <form class="forms-sample">
+
+                                <form class="forms-sample" id="hearingStatusForm" method="POST">
+
                                     <div class="form-group">
-                                        <label for="hearingStatus">Hearing Status Id</label>
-                                        <input type="text" class="form-control" id="userAddInputhearingStatus" placeholder="Document Type Id">
+                                        <label for="hearingStatusId">Hearing Status Id</label>
+                                        <input type="text" class="form-control form-control-hearing-status form" id="hearingStatusId">
                                     </div>
+
                                     <div class="form-group">
                                         <label for="hearingStatusName">Hearing Status Name</label>
-                                        <input type="text" class="form-control" id="userAddInputhearingStatusName" placeholder="Document Type Name">
+                                        <input type="text" class="form-control form-control-hearing-status form" id="hearingStatusName" placeholder="Hearing Status Name">
                                     </div>
+
                                     <div class="form-group">
                                         <label for="hearingStatusDescription">Hearing Status Description</label>
-                                        <textarea class="form-control" id="hearingStatusDescription" rows="4"></textarea>
+                                        <textarea class="form-control form-control-hearing-status form" id="hearingStatusDescription" rows="4"></textarea>
                                     </div>
+
                                     <button id="hearingStatusSubmitBtn" class="btn btn-primary mr-2">Submit</button>
                                     <button type="button" class="btn btn-dark">Cancel</button>
                                 </form>
@@ -105,5 +110,92 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+
+<script>
+
+$('#hearingStatusId').prop('disabled', true)
+
+  //GENERATE APPLICATION STATUS ID
+  function generateId(){
+    $.ajax({
+      url: "../../controller/hearing_status_management/generateHearingStatusId.php",
+      type: "POST",
+      data:{},
+      success: function(response){
+        console.log(response.trim());
+        $('#hearingStatusId').val(response.trim());
+      },
+      error: function(xhr, status, error){
+
+      }
+    })
+  }
+  //END OF GENERATE APPLICATION STATUS ID
+
+  //ADDING DOCUMENT APPLICATION STATUS
+  function addHearingStatus(){
+    $.ajax({
+      url: "../../controller/hearing_status_management/addHearingStatus.php",
+      type: "POST",
+      data:{
+        hearingStatusId: $('#hearingStatusId').val().trim(),
+        hearingStatusName: $('#hearingStatusName').val().trim(),
+        hearingStatusDescription: $('#hearingStatusDescription').val().trim(),
+      },
+      dataType: 'json',
+      success: function(response){
+        console.log(response);
+        if(response.status === "success"){
+          generateId();
+          $('#hearingStatusName').val("");
+          $('#hearingStatusDescription').val("");
+          alert("Added Successfuly!")
+        }
+   
+      },
+      error: function(xhr, status, error){
+        console.log(xhr)
+      }
+    })
+  }
+  //END OF ADDING DOCUMENT APPLICATION STATUS  
+  generateId();
+
+    //VALIDATION OF FIELDS
+    function isEmptyField(){
+    var isEmptyField = false;
+    if($('#hearingStatusName').val().trim() === ""){
+      var isEmptyField = true;
+    }
+
+    if($('#hearingStatusDescription').val().trim() === ""){
+      var isEmptyField = true;
+    }
+    return isEmptyField;
+  }
+  //END OF VALIDATION OF FIELDS
+
+  //SUBMIT BUTTON FUNCTION
+  $('#hearingStatusSubmitBtn').on('click', function(e){
+    e.preventDefault();
+
+    if(isEmptyField()){
+      alert('Empty Field')
+      
+    }else{
+      addHearingStatus();
+    }
+  })
+
+  //END OF SUBMIT BUTTON FUNCTION
+
+
+
+
+</script>
+
+
+
+
   </body>
 </html>
