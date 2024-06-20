@@ -69,7 +69,7 @@
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
-              <span class="menu-title">User View</span>
+              <span class="menu-title">User</span>
             </a>
           </li>
 

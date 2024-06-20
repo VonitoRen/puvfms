@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Redirect requests to 'application-status-management' to 'applicationStatusManagement.php'
+RewriteRule ^application-status-management$ /view/admin/applicationStatusManagement.php [L]

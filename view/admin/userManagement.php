@@ -137,8 +137,13 @@
         console.log(data);
         console.log('hello')
         $('#userTableBody').empty();
-
-        $.each(data, function(index, value){
+                   if (data.length === 0) {
+                       var noDataRow = `<tr>
+                           <td colspan="5" class="text-center">NO RECORD FOUND</td>
+                       </tr>`;
+                       tbody.append(noDataRow);
+                   } else {
+                    $.each(data, function(index, value){
           var row = $('<tr></tr>');
           row.append('<td>' + value.user_id + '</td>');
           row.append('<td>' + value.fullname + '</td>');
@@ -151,8 +156,9 @@
           '<button type="button" class="btn btn-danger btn-fw w-25 deleteUserBtn" data-userid="' + value.user_id + '" data-toggle="modal" data-target="#deleteUserModal">Delete User</button>' +
             '</td>');
 
-          $('#userTableBody').append(row);
 
+
+            $('#userTableBody').append(row);
           // Event delegation for dynamically added buttons
           $('#userTableBody').on('click', '.editUserBtn', function(){
             var userId = $(this).data('userid');
@@ -165,8 +171,10 @@
             console.log('Delete button clicked for user ID: ' + userId);
             // Perform delete action, e.g., show confirmation dialog, etc.
           });
-         
+
         });
+                   }
+
       },
       error: function(xhr, status, error){
 
@@ -184,7 +192,9 @@
       console.log('Edit User Form submitted');
     });    
     //END OF OPEN EDIT USER MODAL
-
+    $('#addUserModal, #editUserModal, #deleteUserModal, .userAddCloseBtn').on('hidden.bs.modal', function (e) {
+        $('.modal-backdrop').remove(); // Manually remove the backdrop
+        });        
   </script>
     <?php
     include_once('userManagementEditModal.php');

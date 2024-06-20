@@ -48,7 +48,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Application Status</h4>
                         <div class="d-flex justify-content-end">
-                        <button type="button" id="addBtn" class="btn btn-primary btn-fw">Add Application Status</button>
+                        <button type="button" class="btn btn-primary btn-fw " data-toggle="modal" data-target="#addApplicationStatusModal">Add Application Status</button>
                         </div>
                         <div class="table-responsive">
                         <table class="table">
@@ -111,37 +111,12 @@
         })
 
         
-    //Add Application Status
-  
-        $(document).ready(function() {
-            $('#addBtn').click(function() {
-                // URL to send the AJAX request to
-                var url = 'applicationStatus.php'; 
-
-                // Perform the AJAX request
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    success: function(data) {
-                        // Handle success if needed, or directly redirect
-                        console.log('AJAX request successful');
-                        // Perform the redirection after successful AJAX call
-                        window.location.href = 'applicationStatus.php';
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', status, error);
-                    }
-                });
-            });
-        });
-        
-    //END ADD APPLICATION STATUS
      </script>
 
 <script>
 
   // Displaying of DATA 
-    $(document).ready(function () {
+
         
         function fetchApplicationStatus() {
             $.ajax({
@@ -151,7 +126,12 @@
                 success: function (data) {
                     var tbody = $('#applicationStatusTableBody');
                     tbody.empty(); // Clear the table body
-
+                    if (data.length === 0) {
+                        var noDataRow = `<tr>
+                            <td colspan="5" class="text-center">NO RECORD FOUND</td>
+                        </tr>`;
+                        tbody.append(noDataRow);
+                    } else {
                     data.forEach(function (applicationStatus) {
                         var row = `<tr>
                             <td>${applicationStatus.application_status_id}</td>
@@ -165,6 +145,7 @@
                         </tr>`;
                         tbody.append(row);
                     });
+                  }
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching data:', status, error);
@@ -174,10 +155,15 @@
 
         // Call fetchDocumentTypes on page load
         fetchApplicationStatus();
-      });
+        
+
+        $('#addApplicationStatusModal, #editApplicationStatusModal, #deleteApplicationStatusModal, .applicationStatusAddCloseBtn').on('hidden.bs.modal', function (e) {
+        $('.modal-backdrop').remove(); // Manually remove the backdrop
+        });    
    
 
   //END OF DISPLAYING DATA
 </script>
+<?php include_once('applicationStatusAddModal.php');?>
   </body>
 </html>

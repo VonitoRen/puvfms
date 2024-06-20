@@ -48,7 +48,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Hearing Status</h4>
                         <div class="d-flex justify-content-end">
-                        <button type="button" id="addBtn" class="btn btn-primary btn-fw">Add Hearing Status</button>
+                        <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#addHearingStatusModal">Add Hearing Status</button>
                         </div>
                         <div class="table-responsive">
                         <table class="table">
@@ -84,7 +84,7 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../assets/js/jquery-3.7.1.min.js"></script>
-    <script src="../../philippine-address-selector-main/ph-address-selector.js"></script>
+
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -111,38 +111,12 @@
         })
 
         
-    //Add Application Status
-  
-        $(document).ready(function() {
-            $('#addBtn').click(function() {
-                // URL to send the AJAX request to
-                var url = 'hearingStatus.php'; 
 
-                // Perform the AJAX request
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    success: function(data) {
-                        // Handle success if needed, or directly redirect
-                        console.log('AJAX request successful');
-                        // Perform the redirection after successful AJAX call
-                        window.location.href = 'hearingStatus.php';
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', status, error);
-                    }
-                });
-            });
-        });
-        
-    //END ADD APPLICATION STATUS
      </script>
 
 <script>
 
-  // Displaying of DATA 
-    $(document).ready(function () {
-        
+
         function fetchHearingStatus() {
             $.ajax({
                 url: '../../controller/hearing_status_management/fetchHearingStatus.php',
@@ -151,7 +125,12 @@
                 success: function (data) {
                     var tbody = $('#hearingStatusTableBody');
                     tbody.empty(); // Clear the table body
-
+                    if (data.length === 0) {
+                        var noDataRow = `<tr>
+                            <td colspan="5" class="text-center">NO RECORD FOUND</td>
+                        </tr>`;
+                        tbody.append(noDataRow);
+                    } else {
                     data.forEach(function (hearingStatus) {
                         var row = `<tr>
                             <td>${hearingStatus.hearing_status_id}</td>
@@ -165,6 +144,7 @@
                         </tr>`;
                         tbody.append(row);
                     });
+                  }
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching data:', status, error);
@@ -174,10 +154,12 @@
 
         // Call fetchDocumentTypes on page load
         fetchHearingStatus();
-      });
-   
-
+ 
+        $('#addHearingStatusModal, #editHearingStatusModal, #deleteHearingStatusModal, .hearingStatusAddCloseBtn').on('hidden.bs.modal', function (e) {
+        $('.modal-backdrop').remove(); // Manually remove the backdrop
+        });    
   //END OF DISPLAYING DATA
 </script>
+<?php include_once('hearingStatusAddModal.php');?>
   </body>
 </html>

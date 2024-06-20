@@ -47,7 +47,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Document Type</h4>
                         <div class="d-flex justify-content-end">
-                        <button type="button" id="addBtn" class="btn btn-primary btn-fw">Add Document Type</button>
+                        <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#addDocumentTypeModal">Add Document Type</button>
                         </div>
                         <div class="table-responsive">
                         <table class="table">
@@ -83,7 +83,7 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../assets/js/jquery-3.7.1.min.js"></script>
-    <script src="../../philippine-address-selector-main/ph-address-selector.js"></script>
+
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -99,6 +99,7 @@
     <script src="../../assets/js/misc.js"></script>
     <script src="../../assets/js/settings.js"></script>
     <script src="../../assets/js/todolist.js"></script>
+
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
@@ -109,39 +110,13 @@
           window.location = "../../index.php";
         })
 
-        
-    //Add Application Status
-  
-        $(document).ready(function() {
-            $('#addBtn').click(function() {
-                // URL to send the AJAX request to
-                var url = 'documentType.php'; 
-
-                // Perform the AJAX request
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    success: function(data) {
-                        // Handle success if needed, or directly redirect
-                        console.log('AJAX request successful');
-                        // Perform the redirection after successful AJAX call
-                        window.location.href = 'documentType.php';
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', status, error);
-                    }
-                });
-            });
-        });
-        
-    //END ADD APPLICATION STATUS
      </script>
 
 
 <script>
 
   // Displaying of DATA 
-    $(document).ready(function () {
+   
         
         function fetchDocumentTypes() {
             $.ajax({
@@ -151,20 +126,26 @@
                 success: function (data) {
                     var tbody = $('#documentTypeTableBody');
                     tbody.empty(); // Clear the table body
-
-                    data.forEach(function (documentType) {
-                        var row = `<tr>
-                            <td>${documentType.document_type_id}</td>
-                            <td>${documentType.document_type_name}</td>
-                            <td>${documentType.document_type_description}</td>
-                            <td>${documentType.document_type_created_at}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning editBtn" data-id="${documentType.document_type_id}">Edit</button>
-                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${documentType.document_type_id}">Delete</button>
-                            </td>
+                    if (data.length === 0) {
+                        var noDataRow = `<tr>
+                            <td colspan="5" class="text-center">NO RECORD FOUND</td>
                         </tr>`;
-                        tbody.append(row);
-                    });
+                        tbody.append(noDataRow);
+                    } else {
+                        data.forEach(function (documentType) {
+                            var row = `<tr>
+                                <td>${documentType.document_type_id}</td>
+                                <td>${documentType.document_type_name}</td>
+                                <td>${documentType.document_type_description}</td>
+                                <td>${documentType.document_type_created_at}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning editBtn" data-id="${documentType.document_type_id}">Edit</button>
+                                    <button class="btn btn-sm btn-danger deleteBtn" data-id="${documentType.document_type_id}">Delete</button>
+                                </td>
+                            </tr>`;
+                            tbody.append(row);
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching data:', status, error);
@@ -174,10 +155,14 @@
 
         // Call fetchDocumentTypes on page load
         fetchDocumentTypes();
-      });
-   
+        $('#addDocumentTypeModal, #editDocumentTypeModal, #deleteDocumentTypeModal, .documentTypeAddCloseBtn').on('hidden.bs.modal', function (e) {
+        $('.modal-backdrop').remove(); // Manually remove the backdrop
+        });    
 
   //END OF DISPLAYING DATA
 </script>
+<?php 
+    include_once('documentTypeAddModal.php');
+    ?>
   </body>
 </html>

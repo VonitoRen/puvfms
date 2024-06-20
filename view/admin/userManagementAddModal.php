@@ -1,6 +1,6 @@
-  <!-- Edit User Modal -->
+  <!-- Add User Modal -->
   <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header">
           <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
@@ -8,73 +8,100 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <!-- Edit user form content goes here -->
-                                <form class="forms-sample" id="addUserForm">
+        <div class="modal-body col-12 grid-margin">
+          <!-- Add user form content goes here -->
+          <form class="forms-sample" id="addUserForm">
+          <p class="card-description"> User Info </p>
+            <hr>
+                        <div class="row">
+                            
+                            <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="userLevel">User Level</label>
+                                       
                                         <select class="form-control add-user-form-input-group user-form-input form-control-select" id="userAddInputUserLevel">
-
                                         </select>
+                                        
                                     </div>
+                            </div>
 
+                            <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="userDepartment">Department</label>
+                                       
                                         <select class="form-control add-user-form-input-group user-form-input form-control-select" id="userAddInputUserDepartment">
-
                                         </select>
+                                  
+                                        
                                     </div>
-
+                            </div>
+                                    
+                            <div class="col-md-6">
                                     <!-- NAME INPUT-->
                                     <div class="form-group">
                                         <label for="lastname">Lastname</label>
+                             
                                         <input type="text" class="form-control add-user-form-input-group user-form-input user-form-input-name" id="userAddInputLastname" placeholder="Lastname">
+                    
                                     </div>
-
+                            </div>
+                                    
+                            <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="firstname">Firstname</label>
+               
                                         <input type="text" class="form-control add-user-form-input-group user-form-input user-form-input-name" id="userAddInputFirstname" placeholder="Firstname">
+            
+                                        
                                     </div>
-
+                            </div>
+                                    
+                            <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="row" >
-                                            <div class="col-1"> 
-                                                <input type="checkbox" class="form-control add-user-form-input-group" id="userAddInputNoMiddleName">
+                                            <div class="col-1 p-0 ml-3"> 
+                                                <input type="checkbox" class="ml-3-form-check-input" id="userAddInputNoMiddleName">
                                             </div>
 
-                                            <div class="col d-flex align-items-center " style="left:-1em;">
+                                            <div class="col d-flex align-items-center " style="left: -7%;">
                                                 <span>I have no middle name</span>
                                             </div>
                                         </div>
                                     </div>
+                            </div>
+                                    
                                        
-
+                            <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="middlename">Middlename</label>
                                         <input type="text" class="form-control add-user-form-input-group user-form-input user-form-input-name" id="userAddInputMiddlename" placeholder="Middlename">
                                     </div>
-
-                                    <div class="form-group">
+                            </div>
+                                    
+                            <div class="col-md-2">
+                                <div class="form-group">
                                     <label for="userSuffix">Suffix</label>
-                                        <select class="form-control add-user-form-input-group user-form-input form-control-select" id="userAddInputUserSuffix">
-                                            <option value="" selected disabled>Suffix</option>
-                                            <option value="none">N/A</option>
-                                            <option value="Jr.">Jr.</option>
-                                            <option value="Sr.">Sr.</option>
-                                            <option value="II">II</option>
-                                            <option value="III">III</option>
-                                            <option value="IV">IV</option>
-                                            <option value="V">V</option>
-                                            <option value="VI">VI</option>
-                                            <option value="VII">VII</option>
-                                            <option value="VIII">VIII</option>
-                                            <option value="IX">IX</option>
-                                            <option value="X">X</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- END OF NAME INPUT-->
-                                    <div class="form-group">
+                                    <select class="form-control add-user-form-input-groupuser-form-input form-control-select"id="userAddInputUserSuffix">
+                                        <option value="" selected disabled>Suffix</option>
+                                        <option value="none">N/A</option>
+                                        <option value="Jr.">Jr.</option>
+                                        <option value="Sr.">Sr.</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                        <option value="V">V</option>
+                                        <option value="VI">VI</option>
+                                        <option value="VII">VII</option>
+                                        <option value="VIII">VIII</option>
+                                        <option value="IX">IX</option>
+                                        <option value="X">X</option>
+                                    </select>
+                                </div>
+                            </div>
+                                    
+                            <div class="col-md-2">
+                                        <!-- END OF NAME INPUT-->
+                                        <div class="form-group">
                                         <label for="userAddInputSex">Sex</label>
                                         <select class="form-control add-user-form-input-group user-form-input form-control-select" id="userAddInputSex">
                                             <option value="" selected disabled>Select your sex:</option>
@@ -82,50 +109,87 @@
                                             <option value="F">Female</option>
                                         </select>
                                     </div>
-
+                            </div>
+                            
+                            <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="userAddInputBirthDate">Birthdate</label>
                                         <input type="date" class="form-control user-form-input" id="userAddInputBirthDate">
                                     </div>
-                                    <div class="form-group">
+                            </div>
+                                   
+                     
+
+                        <div class="col-md-6">
+                                <div class="form-group">
                                         <label for="userAddInputEmail">Email Address</label>
                                         <input type="email" class="form-control user-form-input" id="userAddInputEmail" placeholder="email@gmail.com">
-                                    </div>
+                                </div>
+                        </div>
+                        
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userAddInputPhoneNumber">Phone Number</label>
                                         <input type="text" class="form-control  user-form-input" id="userAddInputPhoneNumber" placeholder="+63 XX XXX XXXX">
                                     </div>
+                        </div>
+                                    
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userAddInputPassword">Password</label>
                                         <input type="password" class="form-control user-form-input" id="userAddInputPassword" placeholder="******">
                                     </div>
+                        </div>
 
+                        <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="userAddInputPassword">Confirm Password</label>
+                                        <input type="password" class="form-control user-form-input" id="userAddInputPassword" placeholder="******">
+                                    </div>
+                        </div>
+                                    
 
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Region</label>
                                         <select name="region" class="form-control user-form-input form-control user-form-input-md form-control-select" id="region"></select>
                                         <input type="hidden" class="form-control user-form-input form-control user-form-input-md" name="region_text" id="region-text" required>
                                     </div>
+                        </div>  
+                                    
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Province</label>
                                         <select name="province" class="form-control user-form-input form-control user-form-input-md form-control-select" id="province"></select>
                                         <input type="hidden" class="form-control user-form-input form-control user-form-input-md" name="province_text" id="province-text" required>
                                     </div>
+                        </div>
+                                   
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">City / Municipality</label>
                                         <select name="city" class="form-control user-form-input form-control user-form-input-md form-control-select" id="city"></select>
                                         <input type="hidden" class="form-control user-form-input form-control user-form-input-md" name="city_text" id="city-text" required>
                                     </div>
+                        </div>
+
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Barangay</label>
                                         <select name="barangay" class="form-control user-form-input form-control user-form-input-md form-control-select" id="barangay"></select>
                                         <input type="hidden" class="form-control user-form-input form-control user-form-input-md" name="barangay_text" id="barangay-text" required>
                                     </div>
+                        </div>
+
+
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="street-text" class="form-label">Street (Optional)</label>
                                         <input type="text" class="form-control form-control" name="street_text" id="street-text">
-                                    </div>                                    
-
+                                    </div>   
+                        </div>
+                                                                    
+                    </div>
                                     <!-- <div class="form-group">
                                         <label for="userAddInputRegion">Region</label>
                                         <select name="userAddInputRegion" id="userAddInputRegion">
@@ -150,8 +214,10 @@
                                         <option value="" selected disabled>Select your barangay:</option>
                                         </select>
                                     </div> -->
+                                <div class="col-md-12 bg-light text-right">
                                     <button type ="button" id="userAddSubmitBtn" class="btn btn-primary mr-2">Submit</button>
                                     <button type="button" class="btn btn-dark userAddCloseBtn" data-dismiss="modal">Cancel</button>
+                                </div>
                                 </form>
         </div>
       </div>
@@ -878,9 +944,7 @@
 
         })
 
-        $('#addUserModal, #editUserModal, #deleteUserModal, .userAddCloseBtn').on('hidden.bs.modal', function (e) {
-        $('.modal-backdrop').remove(); // Manually remove the backdrop
-        });        
+
         //END OF CLOSE BUTTON EVENT LISTENER
     //END OF EVENT LISTENERS
     </script>
