@@ -90,12 +90,24 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-security"></i>
               </span>
               <span class="menu-title">Applicant Document</span>
+              <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" > New CPC</a></li>
+                <li class="nav-item"> <a class="nav-link" > Extension of CPC </a></li>
+                <li class="nav-item"> <a class="nav-link" > Modification of Route </a></li>
+                <li class="nav-item"> <a class="nav-link" > Change of Name </a></li>
+                <li class="nav-item"> <a class="nav-link" > Consolidation of Cases </a></li>
+                <li class="nav-item"> <a class="nav-link" > Adoption of Color Scheme </a></li>
+                <li class="nav-item"> <a class="nav-link" > Change of Party Applicant</a></li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="pages/forms/basic_elements.html">
@@ -126,7 +138,7 @@
               <span class="menu-icon">
                 <i class="mdi mdi-security"></i>
               </span>
-              <span class="menu-title">Setting</span>
+              <span class="menu-title">Utilities</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
@@ -135,6 +147,7 @@
                 <li class="nav-item"> <a class="nav-link" href="documentTypeManagement.php"> Document Type </a></li>
                 <li class="nav-item"> <a class="nav-link" href="applicationStatusManagement.php"> Application Status </a></li>
                 <li class="nav-item"> <a class="nav-link" href="hearingStatusManagement.php"> Hearing Status </a></li>
+                <li class="nav-item"> <a class="nav-link" href="denominationManagement.php"> Denomination </a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Backup and Restore </a></li>
               </ul>
             </div>
