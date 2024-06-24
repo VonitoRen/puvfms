@@ -1,17 +1,23 @@
-  <!-- Add User Modal -->
+ <!-- SWAL -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../swal/swal.css"/>
+ <!-- Edit User Modal -->
   <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+          <h5 class="modal-title text-light" id="addUserModalLabel">Add User</h5>
           <button type="button" class="close userAddCloseBtn" data-dismiss="modal"  aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body col-12 grid-margin">
-          <!-- Add user form content goes here -->
+          <!-- Edit user form content goes here -->
           <form class="forms-sample" id="addUserForm">
-          <p class="card-description"> User Info </p>
+          <h6 class="card-description"> User Info </h6>
             <hr>
                         <div class="row">
                             
@@ -35,18 +41,12 @@
                                         
                                     </div>
                             </div>
-                                    
-                            <div class="col-md-6">
-                                    <!-- NAME INPUT-->
-                                    <div class="form-group">
-                                        <label for="lastname">Lastname</label>
-                             
-                                        <input type="text" class="form-control add-user-form-input-group user-form-input user-form-input-name" id="userAddInputLastname" placeholder="Lastname">
-                    
-                                    </div>
-                            </div>
-                                    
-                            <div class="col-md-6">
+                        
+                        <hr class="col-md-12">
+                        <h6 class="card-description col-md-12 mb-4"> Personal Info </h6>
+                        
+                        
+                        <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="firstname">Firstname</label>
                
@@ -56,29 +56,34 @@
                                     </div>
                             </div>
                                     
-                            <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="row" >
-                                            <div class="col-1 p-0 ml-3"> 
-                                                <input type="checkbox" class="ml-3-form-check-input" id="userAddInputNoMiddleName">
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                    <div class="form-group m-1 border">
+                                            <div class="col p-0 ml-3 border"> 
+                                                <input type="checkbox" class="ml-3-form-check-input" id="userAddInputNoMiddleName"><span>I have no middle name</span>
                                             </div>
-
-                                            <div class="col d-flex align-items-center " style="left: -7%;">
-                                                <span>I have no middle name</span>
-                                            </div>
-                                        </div>
                                     </div>
-                            </div>
                                     
-                                       
-                            <div class="col-md-6">
+                            </div>
+
+                            <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="middlename">Middlename</label>
                                         <input type="text" class="form-control add-user-form-input-group user-form-input user-form-input-name" id="userAddInputMiddlename" placeholder="Middlename">
                                     </div>
                             </div>
+
+                            <div class="col-md-3">
+                                    <!-- NAME INPUT-->
+                                    <div class="form-group">
+                                        <label for="lastname">Lastname</label>
+                             
+                                        <input type="text" class="form-control add-user-form-input-group user-form-input user-form-input-name" id="userAddInputLastname" placeholder="Lastname">
+                    
+                                    </div>
+                            </div>
+
                                     
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="form-group">
                                     <label for="userSuffix">Suffix</label>
                                     <select class="form-control add-user-form-input-groupuser-form-input form-control-select"id="userAddInputUserSuffix">
@@ -99,7 +104,7 @@
                                 </div>
                             </div>
                                     
-                            <div class="col-md-2">
+                            <div class="col-md-6">
                                         <!-- END OF NAME INPUT-->
                                         <div class="form-group">
                                         <label for="userAddInputSex">Sex</label>
@@ -111,15 +116,16 @@
                                     </div>
                             </div>
                             
-                            <div class="col-md-2">
+                            <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userAddInputBirthDate">Birthdate</label>
                                         <input type="date" class="form-control user-form-input" id="userAddInputBirthDate">
                                     </div>
                             </div>
                                    
-                     
+                        <hr class="col-md-12">
 
+                        <h6 class="card-description col-md-12 mb-4"> Account Info </h6>
                         <div class="col-md-6">
                                 <div class="form-group">
                                         <label for="userAddInputEmail">Email Address</label>
@@ -148,8 +154,9 @@
                                     </div>
                         </div>
                                     
-
-                        <div class="col-md-6">
+                        <hr class="col-md-12">
+                        <h6 class="card-description col-md-12 mb-4"> Location Info </h6>
+                        <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">Region</label>
                                         <select name="region" class="form-control user-form-input form-control user-form-input-md form-control-select" id="region"></select>
@@ -157,7 +164,7 @@
                                     </div>
                         </div>  
                                     
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">Province</label>
                                         <select name="province" class="form-control user-form-input form-control user-form-input-md form-control-select" id="province"></select>
@@ -165,7 +172,7 @@
                                     </div>
                         </div>
                                    
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">City / Municipality</label>
                                         <select name="city" class="form-control user-form-input form-control user-form-input-md form-control-select" id="city"></select>
@@ -180,7 +187,6 @@
                                         <input type="hidden" class="form-control user-form-input form-control user-form-input-md" name="barangay_text" id="barangay-text" required>
                                     </div>
                         </div>
-
 
                         <div class="col-md-6">
                                     <div class="form-group">
@@ -242,7 +248,10 @@
                             userLevelInput.append($('<option></option>').val("").text("Select user level.").prop('selected', true).prop('disabled', true))
                             userLevelOptions.forEach(function(userLevel) {
                                 console.log(userLevel);
-                                var option = $('<option></option>').val(userLevel.user_level).text(userLevel.user_level_name.trim());
+                                var ucEquivalentUserLevelNameOption = userLevel.user_level_name.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                                    return letter.toUpperCase();
+                                });
+                                var option = $('<option></option>').val(userLevel.user_level).text(ucEquivalentUserLevelNameOption.trim());
                                 userLevelInput.append(option);
                             });
                     } else {
@@ -573,20 +582,78 @@
                 },
 
                 success: function(response){
-                    if(response.message ==="User successfully added!"){
-                        alert('User added successfully!');
-                        displayUser();
-                    }else{
-                        alert('There is already an existing record with the same email!');
+                    console.log(response); // Log the response to check server's response
+                    if (response.message === "User successfully added!") {
+                        // Display SweetAlert success message
+                        Swal.fire({
+                            title: "User successfully added!",
+                            icon: "success",
+                            button: "OK",
+                            closeOnClickOutside: false,
+                            closeOnEsc: false,
+                            timer: 3000,
+                            customClass: {
+                                popup: 'swal-theme',
+                                confirmButton: 'swal-button',
+                                cancelButton: 'swal-cancel',
+                                title: 'swal-title-custom',
+                                icon: 'icon-swal',
+                                container: 'swal-container'
+                            }
+                        }).then((value) => {
+                            if (value) {
+                                // Redirect or perform any additional action
+                                displayUser();
+                                $('#addUserModal').modal('hide');
+                                $('#addUserForm')[0].reset();
+                                
+                            }
+                        });
+                    } else {
+                        // Display SweetAlert error message (if necessary)
+                        Swal.fire({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error",
+                            button: "OK",
+                            closeOnClickOutside: false,
+                            closeOnEsc: false,
+                            customClass: {
+                                popup: 'swal-theme',
+                        confirmButton: 'swal-button',
+                        cancelButton: 'swal-cancel',
+                        title: 'swal-title-custom',
+                        icon: 'icon-swal',
+                        container: 'swal-container'
+                            }
+                        });
                     }
-                },
-                error: function(xhr, status, error){
+                    },
+                    error: function(xhr, status, error) {
                     console.error(xhr); // Log the full XHR object for detailed error information
                     console.error('Status:', status); // Log the status of the error
-                    console.error('Error:', error); // Log the error message itself                    
-                }
+                    console.error('Error:', error); // Log the error message itself
+
+                    // Display SweetAlert error message for AJAX error (if necessary)
+                    Swal.fire({
+                        title: "Error!",
+                        text: "An error occurred while adding the user.",
+                        icon: "error",
+                        button: "OK",
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                        customClass: {
+                            popup: 'swal-theme',
+                        confirmButton: 'swal-button',
+                        cancelButton: 'swal-cancel',
+                        title: 'swal-title-custom',
+                        icon: 'icon-swal',
+                        container: 'swal-container'
+                        }
+                    });
+                  }
             });
-        }
+       }
     //END OF SERVER SIDE ADDING OF USER
 
     //EVENT LISTENERS
@@ -626,15 +693,27 @@
             }
 
             if(generalValidation()){
-                console.log('congrats')
+        Swal.fire({
+            title: 'Are you sure you want to submit?',
+            text: "",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            customClass: {
+                popup: 'swal-theme',
+                 confirmButton: 'swal-button',
+                 cancelButton: 'swal-cancel',
+                 title: 'swal-title-custom',
+                 icon: 'icon-swal',
+                 container: 'swal-container'
+                    }
+        }).then((result) => {
+            if (result.isConfirmed) {
                 serverAddUser();
-                $('.error-message-text-group').remove()
-                $('.user-form-input').each(function(){
-                    $(this).removeClass('is-invalid is-valid')
-                })                
             }
-
         });
+    }
+});
         //END OF SUBMIT BUTTON EVENT
 
         //NO MIDDLE NAME
@@ -944,7 +1023,9 @@
 
         })
 
-
+        $('#addUserModal, #editUserModal, #deleteUserModal, .userAddCloseBtn').on('hidden.bs.modal', function (e) {
+        $('.modal-backdrop').remove(); // Manually remove the backdrop
+        });        
         //END OF CLOSE BUTTON EVENT LISTENER
     //END OF EVENT LISTENERS
     </script>
