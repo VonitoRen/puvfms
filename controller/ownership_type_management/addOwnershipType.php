@@ -9,20 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // $name = filter_input(INPUT_POST, 'applicationStatusName', FILTER_SANITIZE_STRING);
 // $description = filter_input(INPUT_POST, 'applicationStatusDescription', FILTER_SANITIZE_STRING);
 
-$id = $_POST['applicationStatusId'];
-$name = $_POST['applicationStatusName'];
-$description = $_POST['applicationStatusDescription'];
+$id = $_POST['ownershipTypeIdInput'];
+$name = $_POST['ownershipTypeNameInput'];
+$description = $_POST['ownershipTypeDescriptionInput'];
 // Validate the form data
 if (empty($id) || empty($name) || empty($description)) {
     http_response_code(400); // Bad Request
-    echo "hello";
     echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
     exit;
 }
-
-
 // Prepare the SQL statement to insert the data into the database
-$stmt = $pdo->prepare("INSERT INTO tbl_application_status (application_status_id, application_status_name, application_status_description) VALUES (?, ?, ?)");
+$stmt = $pdo->prepare("INSERT INTO tbl_ownership_type (ownership_type_id, ownership_type_name, ownership_type_description) VALUES (?, ?, ?)");
 $stmt->bindParam(1, $id);
 $stmt->bindParam(2, $name);
 $stmt->bindParam(3, $description);

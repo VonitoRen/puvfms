@@ -6,34 +6,36 @@
 <link rel="stylesheet" href="../../swal/swal.css"/>
 
 <!-- Edit User Modal -->
-<div class="modal fade" id="addApplicationStatusModal" tabindex="-1" role="dialog" aria-labelledby="addApplicationStatusModalLabel" aria-hidden="true">
+<div class="modal fade" id="editApplicationStatusModal" tabindex="-1" role="dialog" aria-labelledby="editApplicationStatusModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="editUserModalLabel">Add Application Status</h5>
+        <h5 class="modal-title" id="editUserModalLabel">Edit Application Status</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Edit user form content goes here -->
-                      <form id="applicationStatusForm" class="forms-sample" method="post">
-                        
-                        <div class="form-group">
-                          <label for="applicationStatusId">Application Status Id</label>
-                          <input type="text" class="form-control form-control-application-status" name="applicationStatusId" id="applicationStatusId">
-                        </div>
-                        <div class="form-group">
-                          <label for="applicationStatusName">Application Status</label>
-                           <input type="text" id="applicationStatusName" name ="applicationStatusName" class="form-control form-control-application-status">
-                        </div>
-                        <div class="form-group">
-                          <label for="applicationStatusDescription">Application Status Description</label>
-                          <textarea class="form-control form-control-application-status" name ="applicationStatusDescription" id="applicationStatusDescription" rows="4"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-primary mr-2" id="addApplicationStatusSubmitBtn">Submit</button>
-                        <button type="button" class="btn btn-dark applicationStatusAddCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
-                      </form>
+          <form id="applicationStatusForm" class="forms-sample" method="post">
+            
+            <div class="form-group">
+              <label for="applicationStatusEditId">Application Status Id</label>
+              <input type="text" class="form-control form-control-application-status" name="applicationStatusEditId" id="applicationStatusEditId" disabled>
+            </div>
+            <div class="form-group">
+              <label for="applicationStatusEditName">Application Status</label>
+               <input type="text" id="applicationStatusEditName" name ="applicationStatusEditName" class="form-control form-control-application-status" >
+            </div>
+            <div class="form-group">
+              <label for="applicationStatusEditDescription" >Application Status Description</label>
+              <textarea class="form-control form-control-application-status" name ="applicationStatusEditDescription" id="applicationStatusEditDescription" rows="4" ></textarea>
+            </div>
+
+     
+            <button type="button" class="btn btn-primary mr-2" id="editApplicationStatusSubmitBtn">Edit</button>
+            <button type="button" class="btn btn-dark applicationStatusEditCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
+          </form>
       </div>
     </div>
   </div>
@@ -61,14 +63,14 @@
   //END OF GENERATE APPLICATION STATUS ID
 
   //ADDING DOCUMENT APPLICATION STATUS
-  function addDocumentApplicationStatus(){
+  function editApplicationStatus(){
     $.ajax({
-      url: "../../controller/application_status_management/addApplicationStatus.php",
+      url: "../../controller/application_status_management/editApplicationStatus.php",
       type: "POST",
       data:{
-        applicationStatusId: $('#applicationStatusId').val().trim(),
-        applicationStatusName: $('#applicationStatusName').val().trim(),
-        applicationStatusDescription: $('#applicationStatusDescription').val().trim(),
+        applicationStatusId: $('#applicationStatusEditId').val().trim(),
+        applicationStatusName: $('#applicationStatusEditName').val().trim(),
+        applicationStatusDescription: $('#applicationStatusEditDescription').val().trim(),
       },
       dataType: 'json',
       success: function(response){
@@ -101,8 +103,8 @@
       } else {
         // Display SweetAlert error message (if necessary)
         Swal.fire({
-          title: "Error!",
-          text: response.message,
+          title: response.message,
+          text: "response.message",
           icon: "error",
           button: "OK",
           closeOnClickOutside: false,
@@ -149,11 +151,11 @@ generateId();
   //VALIDATION OF FIELDS
   function isEmptyField(){
     var isEmptyField = false;
-    if($('#applicationStatusName').val().trim() === ""){
+    if($('#applicationStatusEditName').val().trim() === ""){
       var isEmptyField = true;
     }
 
-    if($('#applicationStatusDescription').val().trim() === ""){
+    if($('#applicationStatusEditDescription').val().trim() === ""){
       var isEmptyField = true;
     }
     return isEmptyField;
@@ -161,7 +163,7 @@ generateId();
   //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
-  $('#addApplicationStatusSubmitBtn').on('click', function(e){
+  $('#editApplicationStatusSubmitBtn').on('click', function(e){
     e.preventDefault();
 
     if(isEmptyField()){
@@ -184,7 +186,7 @@ generateId();
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          addDocumentApplicationStatus();
+          editApplicationStatus();
         }
       });
     }

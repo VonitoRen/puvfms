@@ -9,7 +9,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>PUVFMS LTFRB-RO1</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -55,8 +55,8 @@
                             <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Department Code</th>
-                                <th>Department Name</th>
+                                <th>Denomination Code</th>
+                                <th>Denomination Name</th>
                                 <th>Created At</th>
                             </tr>
                             </thead>

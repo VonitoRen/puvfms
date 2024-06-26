@@ -8,7 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>PUVFMS LTFRB-RO1</title>
+    <title>Ownership Type Management</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -24,7 +24,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+    <link rel="icon" href="../../assets/images/ltftblogo.png" type="image/png">
   </head>
   <body>
     <div class="container-scroller">
@@ -45,9 +45,9 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Document Type</h4>
+                        <h4 class="card-title">Ownership Type</h4>
                         <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#addDocumentTypeModal">Add Document Type</button>
+                        <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#addOwnershipTypeModal">Add Ownership Type</button>
                         </div>
                         <div class="table-responsive">
                         <table class="table">
@@ -60,7 +60,7 @@
                                 <th>Functions</th>
                             </tr>
                             </thead>
-                            <tbody id="documentTypeTableBody">
+                            <tbody id="ownershipTypeTableBody">
 
                             </tbody>
                         </table>
@@ -118,13 +118,13 @@
   // Displaying of DATA 
    
         
-        function fetchDocumentTypes() {
+        function fetchOwnershipTypes() {
             $.ajax({
-                url: '../../controller/document_type_management/fetchDocumentType.php',
+                url: '../../controller/ownership_type_management/fetchOwnershipType.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    var tbody = $('#documentTypeTableBody');
+                    var tbody = $('#ownershipTypeTableBody');
                     tbody.empty(); // Clear the table body
                     if (data.length === 0) {
                         var noDataRow = `<tr>
@@ -132,15 +132,15 @@
                         </tr>`;
                         tbody.append(noDataRow);
                     } else {
-                        data.forEach(function (documentType) {
+                        data.forEach(function (ownershipType) {
                             var row = `<tr>
-                                <td>${documentType.document_type_id}</td>
-                                <td>${documentType.document_type_name}</td>
-                                <td>${documentType.document_type_description}</td>
-                                <td>${documentType.document_type_created_at}</td>
+                                <td>${ownershipType.ownership_type_id}</td>
+                                <td>${ownershipType.ownership_type_name}</td>
+                                <td>${ownershipType.ownership_type_description}</td>
+                                <td>${ownershipType.ownership_type_created_at}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning editBtn" data-id="${documentType.document_type_id}">Edit</button>
-                                    <button class="btn btn-sm btn-danger deleteBtn" data-id="${documentType.document_type_id}">Delete</button>
+                                    <button class="btn btn-sm btn-warning editBtn" data-id="${ownershipType.ownership_type_id}">Edit</button>
+                                    <button class="btn btn-sm btn-danger deleteBtn" data-id="${ownershipType.ownership_type_id}">Delete</button>
                                 </td>
                             </tr>`;
                             tbody.append(row);
@@ -153,16 +153,16 @@
             });
         }
 
-        // Call fetchDocumentTypes on page load
-        fetchDocumentTypes();
-        $('#addDocumentTypeModal, #editDocumentTypeModal, #deleteDocumentTypeModal, .documentTypeAddCloseBtn').on('hidden.bs.modal', function (e) {
+        // Call fetchOwnershipTypes on page load
+        fetchOwnershipTypes();
+        $('#addOwnershipTypeModal, #editOwnershipTypeModal, #deleteOwnershipTypeModal, .ownershipTypeAddCloseBtn').on('hidden.bs.modal', function (e) {
         $('.modal-backdrop').remove(); // Manually remove the backdrop
         });    
 
   //END OF DISPLAYING DATA
 </script>
 <?php 
-    include_once('documentTypeAddModal.php');
+    include_once('ownershipTypeAddModal.php');
     ?>
   </body>
 </html>

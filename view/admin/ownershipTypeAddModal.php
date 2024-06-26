@@ -4,54 +4,54 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="../../swal/swal.css"/>
-
-<!-- Edit User Modal -->
-<div class="modal fade" id="addApplicationStatusModal" tabindex="-1" role="dialog" aria-labelledby="addApplicationStatusModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<!-- Edit Ownership Type Modal -->
+<div class="modal fade" id="addOwnershipTypeModal" tabindex="-1" role="dialog" aria-labelledby="addOwnershipTypeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="ownership">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="editUserModalLabel">Add Application Status</h5>
+        <h5 class="modal-title" id="addOwnershipTypeModalLabel">Edit Ownership Type</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Edit user form content goes here -->
-                      <form id="applicationStatusForm" class="forms-sample" method="post">
-                        
-                        <div class="form-group">
-                          <label for="applicationStatusId">Application Status Id</label>
-                          <input type="text" class="form-control form-control-application-status" name="applicationStatusId" id="applicationStatusId">
-                        </div>
-                        <div class="form-group">
-                          <label for="applicationStatusName">Application Status</label>
-                           <input type="text" id="applicationStatusName" name ="applicationStatusName" class="form-control form-control-application-status">
-                        </div>
-                        <div class="form-group">
-                          <label for="applicationStatusDescription">Application Status Description</label>
-                          <textarea class="form-control form-control-application-status" name ="applicationStatusDescription" id="applicationStatusDescription" rows="4"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-primary mr-2" id="addApplicationStatusSubmitBtn">Submit</button>
-                        <button type="button" class="btn btn-dark applicationStatusAddCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
-                      </form>
+<form class="forms-sample" id="ownershipTypeForm" method="POST">
+
+<div class="form-group">
+    <label for="ownershipTypeIdInput">Ownership Type Id</label>
+    <input type="text" class="form-control form-control-ownership-type" name="ownershipTypeIdInput" id="ownershipTypeIdInput">
+</div>
+
+<div class="form-group">
+    <label for="ownershipTypeNameInput">Ownership Type Name</label>
+    <input type="text" class="form-control form-control-ownership-type" id="ownershipTypeNameInput" name="ownershipTypeNameInput" placeholder="Ownership Type Name">
+</div>
+
+<div class="form-group">
+    <label for="ownershipTypeDescriptionInput">Ownership Type Description</label>
+    <textarea class="form-control form-control-ownership-type" name="ownershipTypeDescriptionInput" id="ownershipTypeDescriptionInput" rows="4"></textarea>
+</div>
+<button id="addOwnershipTypeSubmitBtn" class="btn btn-primary mr-2">Submit</button>
+<button type="button" class="btn btn-dark ownershipTypeAddCloseBtn" data-dismiss="modal" >Cancel</button>
+</form>
       </div>
     </div>
   </div>
-</div>
+</div>  
 
 <script>
-  
-  $('#applicationStatusId').prop('disabled', true)
+  $('#ownershipTypeIdInput').prop('disabled', true)
 
-  //GENERATE APPLICATION STATUS ID
+  //GENERATE DOCUMENT TYPE ID
   function generateId(){
     $.ajax({
-      url: "../../controller/application_status_management/generateApplicationStatusId.php",
+      url: "../../controller/ownership_type_management/generateOwnershipTypeId.php",
       type: "POST",
       data:{},
       success: function(response){
         console.log(response.trim());
-        $('#applicationStatusId').val(response.trim());
+        $('#ownershipTypeIdInput').val(response.trim());
       },
       error: function(xhr, status, error){
 
@@ -60,23 +60,23 @@
   }
   //END OF GENERATE APPLICATION STATUS ID
 
-  //ADDING DOCUMENT APPLICATION STATUS
-  function addDocumentApplicationStatus(){
+  //ADDING DOCUMENT TYPE
+    function addOwnershipType(){
     $.ajax({
-      url: "../../controller/application_status_management/addApplicationStatus.php",
+      url: "../../controller/ownership_type_management/addOwnershipType.php",
       type: "POST",
       data:{
-        applicationStatusId: $('#applicationStatusId').val().trim(),
-        applicationStatusName: $('#applicationStatusName').val().trim(),
-        applicationStatusDescription: $('#applicationStatusDescription').val().trim(),
+        ownershipTypeIdInput: $('#ownershipTypeIdInput').val().trim(),
+        ownershipTypeNameInput: $('#ownershipTypeNameInput').val().trim(),
+        ownershipTypeDescriptionInput: $('#ownershipTypeDescriptionInput').val().trim(),
       },
       dataType: 'json',
       success: function(response){
-        console.log(response); // Log the response to check the server's response
+        console.log(response); // Log the response to check server's response
       if (response.status === "success") {
         // Display SweetAlert success message
         Swal.fire({
-          title: "Application Status added successfully!",
+          title: "Ownership Type added successfully!",
           icon: "success",
           button: "OK",
           closeOnClickOutside: false,
@@ -94,8 +94,7 @@
           if (value) {
             // Perform any additional action
             generateId();
-            fetchApplicationStatus();
-            window.location= "applicationStatusManagement.php"
+             window.location="ownershipTypeManagement.php"
           }
         });
       } else {
@@ -126,7 +125,7 @@
       // Display SweetAlert error message for AJAX error (if necessary)
       Swal.fire({
         title: "Error!",
-        text: "An error occurred while adding the application status.",
+        text: "An error occurred while adding the ownership type.",
         icon: "error",
         button: "OK",
         closeOnClickOutside: false,
@@ -146,29 +145,30 @@
 // END OF ADDING DOCUMENT APPLICATION STATUS
 generateId();
 
-  //VALIDATION OF FIELDS
-  function isEmptyField(){
-    var isEmptyField = false;
-    if($('#applicationStatusName').val().trim() === ""){
-      var isEmptyField = true;
-    }
 
-    if($('#applicationStatusDescription').val().trim() === ""){
-      var isEmptyField = true;
+  //VALIDATION OF FIELDS
+    function isEmptyField(){
+      var isEmptyField = false;
+      if($('#ownershipTypeNameInput').val().trim() === ""){
+        var isEmptyField = true;
+      }
+
+      if($('#ownershipTypeDescriptionInput').val().trim() === ""){
+        var isEmptyField = true;
+      }
+      return isEmptyField;
     }
-    return isEmptyField;
-  }
   //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
-  $('#addApplicationStatusSubmitBtn').on('click', function(e){
-    e.preventDefault();
+    $('#addOwnershipTypeSubmitBtn').on('click', function(e){
+      e.preventDefault();
 
-    if(isEmptyField()){
-      alert('Empty Field')
-      
-    }else{
-      Swal.fire({
+      if(isEmptyField()){
+        alert('Empty Field')
+
+      }else{
+        Swal.fire({
         title: 'Are you sure you want to submit?',
         text: "",
         icon: 'question',
@@ -184,19 +184,15 @@ generateId();
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          addDocumentApplicationStatus();
+          addOwnershipType();
         }
       });
     }
   });
 
-
   //END OF SUBMIT BUTTON FUNCTION
 
-
 </script>
-
-
 
   </body>
 </html>
