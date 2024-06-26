@@ -147,6 +147,7 @@
 generateId();
 
   //VALIDATION OF FIELDS
+  $(document).ready(function() {  
   function isEmptyField(){
     var isEmptyField = false;
     if($('#applicationStatusName').val().trim() === ""){
@@ -161,7 +162,8 @@ generateId();
   //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
-  $('#addApplicationStatusSubmitBtn').on('click', function(e){
+
+    $('#addApplicationStatusSubmitBtn').on('click', function(e){
     e.preventDefault();
 
     if(isEmptyField()){
@@ -189,6 +191,9 @@ generateId();
       });
     }
   });
+
+  })
+
 
 
   //END OF SUBMIT BUTTON FUNCTION

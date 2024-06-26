@@ -4,78 +4,64 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="../../swal/swal.css"/>
+
 <!-- Edit User Modal -->
-<div class="modal fade" id="addHearingStatusModal" tabindex="-1" role="dialog" aria-labelledby="addHearingStatusModalLabel" aria-hidden="true">
+<div class="modal fade" id="editHearingStatusModal" tabindex="-1" role="dialog" aria-labelledby="editHearingStatusModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="addHearingStatusModalLabel">Add Hearing Status</h5>
+        <h5 class="modal-title" id="editUserModalLabel">Edit Hearing Status</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Edit user form content goes here -->
-                                <form class="forms-sample" id="hearingStatusForm" method="POST">
+          <form id="hearingStatusForm" class="forms-sample" method="post">
+            
+            <div class="form-group">
+              <label for="hearingStatusEditId">Hearing Status Id</label>
+              <input type="text" class="form-control form-control-application-status" name="hearingStatusEditId" id="hearingStatusEditId" disabled>
+            </div>
+            <div class="form-group">
+              <label for="hearingStatusEditName">Hearing Status</label>
+               <input type="text" id="hearingStatusEditName" name ="hearingStatusEditName" class="form-control form-control-application-status" >
+            </div>
+            <div class="form-group">
+              <label for="hearingStatusEditDescription" >Hearing Status Description</label>
+              <textarea class="form-control form-control-application-status" name ="hearingStatusEditDescription" id="hearingStatusEditDescription" rows="4" ></textarea>
+            </div>
 
-                                    <div class="form-group">
-                                        <label for="hearingStatusId">Hearing Status Id</label>
-                                        <input type="text" class="form-control form-control-hearing-status form" id="hearingStatusId">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="hearingStatusName">Hearing Status Name</label>
-                                        <input type="text" class="form-control form-control-hearing-status form" id="hearingStatusName" placeholder="Hearing Status Name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="hearingStatusDescription">Hearing Status Description</label>
-                                        <textarea class="form-control form-control-hearing-status form" id="hearingStatusDescription" rows="4"></textarea>
-                                    </div>
-
-                                    <button id="hearingStatusSubmitBtn" class="btn btn-primary mr-2">Submit</button>
-                                    <button type="button" class="btn btn-dark hearingStatusAddCloseBtn" data-dismiss="modal">Cancel</button>
-                                </form>
+     
+            <button type="button" class="btn btn-primary mr-2" id="editHearingStatusSubmitBtn">Edit</button>
+            <button type="button" class="btn btn-dark hearingStatusEditCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
+          </form>
       </div>
     </div>
   </div>
 </div>
+
 <script>
+  
+  $('#applicationStatusId').prop('disabled', true)
 
-$('#hearingStatusId').prop('disabled', true)
-
-  //GENERATE APPLICATION STATUS ID
-  function generateId(){
-    $.ajax({
-      url: "../../controller/hearing_status_management/generateHearingStatusId.php",
-      type: "POST",
-      data:{},
-      success: function(response){
-        console.log(response.trim());
-        $('#hearingStatusId').val(response.trim());
-      },
-      error: function(xhr, status, error){
-
-      }
-    })
-  }
-  //END OF GENERATE APPLICATION STATUS ID
 
   //ADDING DOCUMENT APPLICATION STATUS
-  function addHearingStatus(){
+  function editHearingStatus(){
     $.ajax({
-      url: "../../controller/hearing_status_management/addHearingStatus.php",
+      url: "../../controller/hearing_status_management/editHearingStatus.php",
       type: "POST",
       data:{
-        hearingStatusId: $('#hearingStatusId').val().trim(),
-        hearingStatusName: $('#hearingStatusName').val().trim(),
-        hearingStatusDescription: $('#hearingStatusDescription').val().trim(),
+        hearingStatusId: $('#hearingStatusEditId').val().trim(),
+        hearingStatusName: $('#hearingStatusEditName').val().trim(),
+        hearingStatusDescription: $('#hearingStatusEditDescription').val().trim(),
       },
       dataType: 'json',
       success: function(response){
-      console.log(response);
-        if(response.status === "success"){
-          Swal.fire({
+        console.log(response); // Log the response to check the server's response
+      if (response.status === "success") {
+        // Display SweetAlert success message
+        Swal.fire({
           title: "Hearing Status added successfully!",
           icon: "success",
           button: "OK",
@@ -94,15 +80,15 @@ $('#hearingStatusId').prop('disabled', true)
           if (value) {
             // Perform any additional action
             generateId();
-            fetchHearingStatus();
-            window.location="hearingStatusManagement.php"
+            fetchApplicationStatus();
+            window.location= "hearingStatusManagement.php"
           }
         });
       } else {
         // Display SweetAlert error message (if necessary)
         Swal.fire({
-          title: "Error!",
-          text: response.message,
+          title: response.message,
+          text: "response.message",
           icon: "error",
           button: "OK",
           closeOnClickOutside: false,
@@ -126,7 +112,7 @@ $('#hearingStatusId').prop('disabled', true)
       // Display SweetAlert error message for AJAX error (if necessary)
       Swal.fire({
         title: "Error!",
-        text: "An error occurred while adding the hearing status.",
+        text: "An error occurred while editing hearing status.",
         icon: "error",
         button: "OK",
         closeOnClickOutside: false,
@@ -146,32 +132,25 @@ $('#hearingStatusId').prop('disabled', true)
 // END OF ADDING DOCUMENT APPLICATION STATUS
 generateId();
 
-    //VALIDATION OF FIELDS
-    $(document).ready(function() {
-      function isEmptyField(){
+  //VALIDATION OF FIELDS
+  function isEmptyField(){
     var isEmptyField = false;
-    
-    if($('#hearingStatusName').val().trim() === ""){
+    if($('#hearingStatusEditName').val().trim() === ""){
       var isEmptyField = true;
     }
 
-    if($('#hearingStatusDescription').val().trim() === ""){
+    if($('#hearingStatusEditDescription').val().trim() === ""){
       var isEmptyField = true;
-
     }
-    console.log($('#hearingStatusName').val())
-    console.log($('#hearingStatusDescription').val())
     return isEmptyField;
   }
   //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
-  $('#hearingStatusSubmitBtn').on('click', function(e){
+  $('#editHearingStatusSubmitBtn').on('click', function(e){
     e.preventDefault();
 
     if(isEmptyField()){
-      console.log($('#hearingStatusName').val())
-      console.log($('#hearingStatusDescription').val())
       alert('Empty Field')
       
     }else{
@@ -191,19 +170,19 @@ generateId();
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          addHearingStatus();
+          editHearingStatus();
         }
       });
     }
   });
 
-    });
-
-
 
   //END OF SUBMIT BUTTON FUNCTION
 
 
-
-
 </script>
+
+
+
+  </body>
+</html>

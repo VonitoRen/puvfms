@@ -56,7 +56,6 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Status</th>
-                                <th>Description</th>
                                 <th>Date Created</th>
                                 <th>Functions</th>
                             </tr>
@@ -135,11 +134,12 @@
                         var row = `<tr>
                             <td>${hearingStatus.hearing_status_id}</td>
                             <td>${hearingStatus.hearing_status_name}</td>
-                            <td>${hearingStatus.hearing_status_description}</td>
+                            <td hidden>${hearingStatus.hearing_status_description}</td>
                             <td>${hearingStatus.hearing_status_created_at}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning editBtn" data-id="${hearingStatus.hearing_status_id}">Edit</button>
-                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${hearingStatus.hearing_status_id}">Delete</button>
+                                <button class="btn btn-sm btn-primary view-button" data-toggle="modal" data-target="#viewHearingStatusModal" data-id="${hearingStatus.application_status_id}" >View</button>
+                                <button class="btn btn-sm btn-secondary edit-button" data-toggle="modal" data-target="#editHearingStatusModal" data-id="${hearingStatus.application_status_id}">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-button" data-toggle="modal" data-target="#deleteHearingStatusModal" data-id="${hearingStatus.application_status_id}">Delete</button>     
                             </td>
                         </tr>`;
                         tbody.append(row);
@@ -159,7 +159,57 @@
         $('.modal-backdrop').remove(); // Manually remove the backdrop
         });    
   //END OF DISPLAYING DATA
+$(document).ready(function() {
+  $('.view-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application Status ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application Status Name
+    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Application Status Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Application Status Created At
+    console.log('Application Status ID:', statusId);
+    console.log('Application Status Name:', statusName);
+    console.log('Application Status Description:', statusDescription);
+    console.log('Application Status Created At:', createdAt);
+    $('#hearingStatusViewId').val(statusId)
+    $('#hearingStatusViewName').val(statusName)
+    $('#hearingStatusViewDescription').val(statusDescription)
+    $('#hearingStatusViewCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+
+  $('.edit-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application Status ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application Status Name
+    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Application Status Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Application Status Created At
+    console.log('Application Status ID:', statusId);
+    console.log('Application Status Name:', statusName);
+    console.log('Application Status Description:', statusDescription);
+    console.log('Application Status Created At:', createdAt);
+    $('#hearingStatusEditId').val(statusId)
+    $('#hearingStatusEditName').val(statusName)
+    $('#hearingStatusEditDescription').val(statusDescription)
+    $('#hearingStatusEditCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+});  
 </script>
 <?php include_once('hearingStatusAddModal.php');?>
+<?php include_once('hearingStatusEditModal.php');?>
   </body>
 </html>
