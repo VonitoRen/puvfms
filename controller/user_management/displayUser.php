@@ -4,7 +4,7 @@ include_once('../../static/conn.php');
 function getUser($pdo){
     try {
         $stmt = $pdo->prepare(
-                            "SELECT u.user_id, CONCAT(user_first_name, ' ', user_middle_name, ' ', user_last_name) AS fullname, 
+                            "SELECT u.user_id, CONCAT(user_first_name, ' ', user_middle_name, ' ', user_last_name, ' ',user_suffix) AS fullname, 
                             department_name, 
                             user_status,
                             user_level_name,

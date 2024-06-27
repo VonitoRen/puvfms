@@ -73,9 +73,21 @@ function fetchUser(id){
             $('#userEditInputUserLevel').val(data.user_level)
             $('#userEditInputUserDepartment').val(data.user_level)
             $('#userEditInputFirstname').val(data.user_first_name)
-            $('#userEditInputMiddlename').val(data.user_middle_name)
+            if(data.user_middle_name === "" || data.user_middle_name === null){
+                $('#userEditInputNoMiddleName').prop('checked', true).trigger('change');
+            }
+
             $('#userEditInputLastname').val(data.user_last_name)
-            $('#userEditInputUserSuffix').val(data.user_suffix)
+            if(data.user_suffix === "" || data.user_suffix === "none"){
+                $('#userEditInputUserSuffix').val('none')
+            }else{
+                $('#userEditInputUserSuffix').val(data.user_suffix)
+            }
+            
+            $('#userEditInputEmail').val(data.email)
+
+            // Format the phone number
+
             $('#userEditInputSex').val(data.user_sex)
 
             var formattedBirthDate = data.user_birthyear + '-' + data.user_birthmonth + '-' + data.user_birthday;
@@ -83,8 +95,29 @@ function fetchUser(id){
             // Set the formatted date to the input field using jQuery
             $('#userEditInputBirthDate').val(formattedBirthDate);
 
-            $('#regionEdit').val(data.user_region)
-            $('#provinceEdit').val(data.user_province)
+            var formattedPhoneNumber = "+" + data.user_phone_number.slice(0, 2) + " " + data.user_phone_number.slice(2, 5) + " " + data.user_phone_number.slice(5, 8) + " " + data.user_phone_number.slice(8);
+            $('#userEditInputPhoneNumber').val(formattedPhoneNumber)
+
+
+            $('#regionEdit').val(data.user_region).trigger('change'); // Trigger change event after setting value
+            $('#regionEdit').removeClass('is-valid');
+
+            setTimeout(() => {
+                $('#provinceEdit').val(data.user_province).trigger('change'); // Trigger change event after setting value
+                $('#provinceEdit').removeClass('is-valid');
+            }, 100); // Adjust the timeout as necessary
+
+            setTimeout(() => {
+                $('#cityEdit').val(data.user_city_municipality).trigger('change'); // No need to trigger change for the last select
+                $('#cityEdit').removeClass('is-valid');
+            }, 200); // Adjust the timeout as necessary
+
+            setTimeout(() => {
+                $('#barangayEdit').val(data.user_barangay).trigger('change'); // No need to trigger change for the last select
+                $('#barangayEdit').removeClass('is-valid');
+            }, 300); // Adjust the timeout as necessary
+
+            $('#streetTextEdit').val(data.user_street)
         },
         error: function(xhr, error, status){
 
@@ -188,6 +221,11 @@ function clearForm(form){
 
     // Reset all select fields
     $(form).find('select').each(function() {
+        $(this).val('');
+        $(this).removeClass('is-valid is-invalid');
+    });
+
+    $(form).find('.form-control').each(function() {
         $(this).val('');
         $(this).removeClass('is-valid is-invalid');
     });
@@ -461,9 +499,132 @@ $('#userEditBtn').on('click', function(e){
         return generalValidationComplete;
     }
 
-    generalValidation();
+    if(generalValidation()){
+        Swal.fire({
+            title: 'Are you sure you want to edit the information of this user?',
+            text: "",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            customClass: {
+                popup: 'swal-theme',
+                confirmButton: 'swal-button',
+                cancelButton: 'swal-cancel',
+                title: 'swal-title-custom',
+                icon: 'icon-swal',
+                container: 'swal-container'
+                    }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                serverEditUser();
+            }
+        });
+    }
 })
 //EDIT BUTTON
+
+//EDIT USER FUNCTION
+function serverEditUser(){           
+    $.ajax({
+        url:'../../controller/user_management/editUser.php',
+        type:'POST',
+        dataType: 'json',
+        data:{
+            editUserId: $('#userEditUserId').val().trim(),
+            editUserLevel: $('#userEditInputUserLevel').val().trim(),
+            editUserDepartment: $('#userEditInputUserDepartment').val().trim(),
+            editUserFirstName: $('#userEditInputFirstname').val().trim(),
+            editUserMiddleName: $('#userEditInputMiddlename').val().trim(),
+            editUserLastName: $('#userEditInputLastname').val().trim(),
+            editUserSuffix: $('#userEditInputUserSuffix').val().trim(),
+            editUserSex: $('#userEditInputSex').val().trim(),
+            editUserBirthdate: $('#userEditInputBirthDate').val().trim(),
+            editUserEmail: $('#userEditInputEmail').val().trim(),
+            editUserPhoneNumber: $('#userEditInputPhoneNumber').val().trim(),
+            editUserRegion: $('#regionEdit option:selected').val().trim(),
+            editUserProvince: $('#provinceEdit option:selected').val().trim(),
+            editUserCity: $('#cityEdit option:selected').val().trim(),
+            editUserBarangay: $('#barangayEdit option:selected').val().trim(),  
+            editUserStreet: $('#streetTextEdit').val().trim(),             
+
+        },
+
+        success: function(response){
+            // console.log(response); // Log the response to check server's response
+            console.log('hello im here at ajax serve')
+            if (response.message === "Record updated successfully.") {
+                // Display SweetAlert success message
+                Swal.fire({
+                    title: "User successfully updated!",
+                    icon: "success",
+                    button: "OK",
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                    timer: 3000,
+                    customClass: {
+                        popup: 'swal-theme',
+                        confirmButton: 'swal-button',
+                        cancelButton: 'swal-cancel',
+                        title: 'swal-title-custom',
+                        icon: 'icon-swal',
+                        container: 'swal-container'
+                    }
+                }).then((value) => {
+                    if (value) {
+                        // Redirect or perform any additional action
+                        displayUser();
+                        $('#editUserModal').modal('hide');
+                        $('#editUserForm')[0].reset();
+                        clearForm('#editUserForm');
+                    }
+                });
+            } else {
+                // Display SweetAlert error message (if necessary)
+                Swal.fire({
+                    title: "Error!",
+                    text: response.message,
+                    icon: "error",
+                    button: "OK",
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                    customClass: {
+                        popup: 'swal-theme',
+                confirmButton: 'swal-button',
+                cancelButton: 'swal-cancel',
+                title: 'swal-title-custom',
+                icon: 'icon-swal',
+                container: 'swal-container'
+                    }
+                });
+            }
+            },
+            error: function(xhr, status, error) {
+            console.error(xhr); // Log the full XHR object for detailed error information
+            console.error('Status:', status); // Log the status of the error
+            console.error('Error:', error); // Log the error message itself
+
+            // Display SweetAlert error message for AJAX error (if necessary)
+            Swal.fire({
+                title: "Error!",
+                text: "An error occurred while editting the user.",
+                icon: "error",
+                button: "OK",
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                customClass: {
+                    popup: 'swal-theme',
+                confirmButton: 'swal-button',
+                cancelButton: 'swal-cancel',
+                title: 'swal-title-custom',
+                icon: 'icon-swal',
+                container: 'swal-container'
+                }
+            });
+          }
+    });
+}
+//END OF SERVER SIDE ADDING OF USER
+//END OF EDIT USER FUNCTION
 //SUBMIT BUTTON EVENT
 $('#userAddSubmitBtn').on('click', function(e){
     e.preventDefault();
@@ -497,26 +658,26 @@ $('#userAddSubmitBtn').on('click', function(e){
     }
 
     if(generalValidation()){
-Swal.fire({
-    title: 'Are you sure you want to submit?',
-    text: "",
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'Yes',
-    customClass: {
-        popup: 'swal-theme',
-         confirmButton: 'swal-button',
-         cancelButton: 'swal-cancel',
-         title: 'swal-title-custom',
-         icon: 'icon-swal',
-         container: 'swal-container'
+        Swal.fire({
+            title: 'Are you sure you want to submit?',
+            text: "",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            customClass: {
+                popup: 'swal-theme',
+                confirmButton: 'swal-button',
+                cancelButton: 'swal-cancel',
+                title: 'swal-title-custom',
+                icon: 'icon-swal',
+                container: 'swal-container'
+                    }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                serverAddUser();
             }
-}).then((result) => {
-    if (result.isConfirmed) {
-        serverAddUser();
+        });
     }
-});
-}
 });
 //END OF SUBMIT BUTTON EVENT
 
@@ -534,7 +695,21 @@ $('#userAddInputNoMiddleName').on('change', function(e){
         userAddEmailInput.prop('disabled',false);
         userAddEmailInput.removeClass('is-valid is-invalid');
     }
+});
 
+$('#userEditInputNoMiddleName').on('change', function(e){
+    e.preventDefault();
+    var userEditEmailInput = $('#userEditInputMiddlename')
+    if($(this).is(':checked')){
+        userEditEmailInput.removeClass('is-valid is-invalid');
+        userEditEmailInput.val("");
+        userEditEmailInput.prop('disabled',true);
+        clearErrorMessage($('#userEditInputMiddlename'))
+        userEditEmailInput.addClass('is-valid')
+    }else{
+        userEditEmailInput.prop('disabled',false);
+        userEditEmailInput.removeClass('is-valid is-invalid');
+    }
 });
 //END OF NO MIDDLE NAME
 
@@ -568,7 +743,7 @@ $('#userAddInputBirthDate').on('change', function(){
 })
 //END OF BIRTHDATE CONTROLS
 
-$('#userAddInputPhoneNumber').on('input keypress', function(event) {
+$('#userAddInputPhoneNumber, #userEditInputPhoneNumber').on('input keypress', function(event) {
     // Allow only numbers (0-9) and control keys (backspace, delete, arrow keys)
     if (!(event.key >= '0' && event.key <= '9') &&
         event.key !== 'Backspace' &&
@@ -626,7 +801,7 @@ $('#userAddInputPhoneNumber').on('input keypress', function(event) {
     }
 });
 
-$('#userAddInputPhoneNumber').on('paste', function(event) {
+$('#userAddInputPhoneNumber, #userEditInputPhoneNumber').on('paste', function(event) {
     var input = $(this);
     var currInput = $(this).val();
 
@@ -662,7 +837,7 @@ $('#userAddInputPhoneNumber').on('paste', function(event) {
 //END OF SELECT OPTION CONTROL
 
 //EMAIL ADDRESS CONTROL
-$('#userAddInputEmail').on('input', function(){
+$('#userAddInputEmail, #userEditInputEmail').on('input', function(){
     setTimeout(() => {
         if ($(this).val() == "") {
             displayErrorMessage($(this), '• Please enter an email address.')

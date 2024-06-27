@@ -159,7 +159,7 @@
             </a>
             <div class="collapse" id="auth1">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="services.php"> Services </a></li>
+                <li class="nav-item"> <a class="nav-link" href="serviceManagement.php"> Service </a></li>
                 <li class="nav-item"> <a class="nav-link" href="documentTypeManagement.php"> Document Type </a></li>
                 <li class="nav-item"> <a class="nav-link" href="applicationStatusManagement.php"> Application Status </a></li>
                 <li class="nav-item"> <a class="nav-link" href="hearingStatusManagement.php"> Hearing Status </a></li>
