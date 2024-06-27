@@ -43,9 +43,21 @@
           <!-- content-wrapper starts-->
           <div class="content-wrapper">
 
-                <div class="card">
-                    <div class="card-body">
+          <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                    <div class="col-md-8">
                         <h4 class="card-title">Ownership Type</h4>
+                    </div>
+                 
+                    <div class="col-md-4">
+                      
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                        
+                    </div>
+                  </div>
+                </div>
                         <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#addOwnershipTypeModal">Add Ownership Type</button>
                         </div>
@@ -55,7 +67,6 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Description</th>
                                 <th>Date Created</th>
                                 <th>Functions</th>
                             </tr>
@@ -136,12 +147,13 @@
                             var row = `<tr>
                                 <td>${ownershipType.ownership_type_id}</td>
                                 <td>${ownershipType.ownership_type_name}</td>
-                                <td>${ownershipType.ownership_type_description}</td>
+                                <td hidden>${ownershipType.ownership_type_description}</td>
                                 <td>${ownershipType.ownership_type_created_at}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning editBtn" data-id="${ownershipType.ownership_type_id}">Edit</button>
-                                    <button class="btn btn-sm btn-danger deleteBtn" data-id="${ownershipType.ownership_type_id}">Delete</button>
-                                </td>
+                                <button class="btn btn-sm btn-primary view-button" data-toggle="modal" data-target="#viewOwnershipTypeModal" data-id="${ownershipType.ownership_type_id}" >View</button>
+                                <button class="btn btn-sm btn-secondary edit-button" data-toggle="modal" data-target="#editOwnershipTypeModal" data-id="${ownershipType.ownership_type_id}">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-button" data-toggle="modal" data-target="#deleteOwnershipTypeModal" data-id="${ownershipType.ownership_type_id}">Delete</button>                                
+                            </td>
                             </tr>`;
                             tbody.append(row);
                         });
@@ -160,9 +172,88 @@
         });    
 
   //END OF DISPLAYING DATA
+
+  //OPENING ADD APPLICATION STATUS MODAL
+  $('#addOwnershipTypeBtnModalShow').on('click', function(){
+          console.log('goods')
+          
+        })
+  //OPENING ADD APPLICATION STATUS MODAL
+
+  //VIEWING OF INFORMATION
+  $(document).ready(function() {
+  $('.view-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Ownership Type ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Ownership Type Name
+    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Ownership Type Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Ownership Type Created At
+    console.log('Ownership Type ID:', statusId);
+    console.log('Ownership Type Name:', statusName);
+    console.log('Ownership Type Description:', statusDescription);
+    console.log('Ownership Type Created At:', createdAt);
+    $('#ownershipTypeViewId').val(statusId)
+    $('#ownershipTypeViewName').val(statusName)
+    $('#ownershipTypeViewDescription').val(statusDescription)
+    $('#ownershipTypeViewCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+
+  $('.edit-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Ownership Type ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Ownership Type Name
+    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Ownership Type Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Ownership Type Created At
+    console.log('Ownership Type ID:', statusId);
+    console.log('Ownership Type Name:', statusName);
+    console.log('Ownership Type Description:', statusDescription);
+    console.log('Ownership Type Created At:', createdAt);
+    $('#ownershipTypeEditId').val(statusId)
+    $('#ownershipTypeEditName').val(statusName)
+    $('#ownershipTypeEditDescription').val(statusDescription)
+    $('#ownershipTypeEditCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+});
+
+
+  //   console.log($(this));
+  // })
+  //END OF VIEWING OF INFORMATION
+        // Function to filter table rows based on search input
+        function filterTableRows() {
+            const searchQuery = $('#searchInput').val().toLowerCase();
+            $('#ownershipTypeTableBody tr').each(function() {
+                // Collect text from searchable columns only (excluding "Date Created" and "Functions")
+                const searchableText = $(this).find('td').not(':nth-child(3)').not(':nth-child(4)').text().toLowerCase();
+                $(this).toggle(searchableText.includes(searchQuery));
+            });
+        }
+        
+        // Event listener for search input field to filter as user types
+        $('#searchInput').on('keyup', function() {
+            filterTableRows();
+        });
 </script>
 <?php 
     include_once('ownershipTypeAddModal.php');
+    include_once('ownershipTypeViewModal.php');
+    include_once('ownershipTypeEditModal.php');
     ?>
   </body>
 </html>

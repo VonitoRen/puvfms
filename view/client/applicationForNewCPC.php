@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>CERTIFICATE FOR CPC</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -20,7 +20,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/boostrap.min.css">
+
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
 </head>
@@ -39,27 +39,20 @@
                         <h4 class="fs-2">Primary Requirements:<br></h4>
                         <hr>
                         <div class="form-group">
-                            <label for="formFile" class="form-label">1. Four (4) copies of Verified Application alleging proof of citizenship and
-                            financial capacity with annexes and verification and certification of NonForum Shopping; </label>
+                            <label for="formFile" class="form-label">1. Template of Application for New CPC.</label>
                             <input class="form-control" type="file" id="formFile" multiple>
                         </div>
 
                         <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">2. Authorization from the Department of Transportation (DOTr) for applicable
-                            types of service (PUB, TX, PUJ, UV, TNVS and P2P);</label>
+                            <label for="formFileMultiple" class="form-label">2. Proof of notarization of application/petition form.</label>
                             <input class="form-control" type="file" id="formFileMultiple" multiple>
                         </div>
 
-                        <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">3. LTO OR/CR of authorized unit/s with year model;</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
+                        <div class="form-group align-items-center">
+                            <input type="checkbox" class="form-check-input mr-2" id="exampleCheck1">
+                            <p class="mb-0 ">For RFRO adopting Online Hearing:</p>
                         </div>
 
-                        <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">4. Authorization from the Department of Transportation (DOTr) for applicable
-                            types of service (PUB, TX, PUJ, UV, TNVS and P2P);</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
-                        </div>
 
                         <hr>
                         <h4 class="fs-2">Additional Requirements:<br></h4>
@@ -124,13 +117,11 @@
             window.location = "../../index.php";
         })
 
-
+        $('#newCPCStatusSubmitBtn').on('click', function(e){
+            e.preventDefault();
+            console.log('hello')
+        })
     </script>
-
-    <script>
-
-    </script>
-
 </body>
 
 </html>

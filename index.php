@@ -76,7 +76,7 @@
             <h2 data-aos="fade-up">Apply Now!</h2>
             <p data-aos="fade-up" data-aos-delay="100">Online Portal of Land Transportation Franchising and Regulatory Board - Region 1 Application for New Franchise or Renewal of Franchising. Click here to Apply! </p>
 
-            <button class="btn btn-primary">Apply Now</button>
+            <button class="btn btn-primary" id="applyNowBtn">Apply Now</button>
 
             <div class="row gy-4" data-aos="fade-up" data-aos-delay="300">
 
@@ -351,7 +351,12 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  <script src="assets/js/jquery-3.7.1.min.js"></script>
+  <script>
+    $('#applyNowBtn').on('click',function(){
+        window.location.href = "view/client/applicationForm.php"
+    })
+  </script>
 </body>
 
 </html>

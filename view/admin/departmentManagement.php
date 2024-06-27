@@ -136,8 +136,9 @@
                             <td>${departmentManagement.department_name}</td>
                             <td>${departmentManagement.department_created_at}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning editBtn" data-id="${departmentManagement.department_id}">Edit</button>
-                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${departmentManagement.department_id}">Delete</button>
+                                <button class="btn btn-sm btn-primary view-button" data-toggle="modal" data-target="#viewDepartmentModal" data-id="${departmentManagement.department_id}" >View</button>
+                                <button class="btn btn-sm btn-secondary edit-button" data-toggle="modal" data-target="#editDepartmentModal" data-id="${departmentManagement.department_id}">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-button" data-toggle="modal" data-target="#deleteDepartmentModal" data-id="${departmentManagement.department_id}">Delete</button>                                
                             </td>
                         </tr>`;
                         tbody.append(row);

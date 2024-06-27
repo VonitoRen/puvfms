@@ -6,35 +6,35 @@
 <link rel="stylesheet" href="../../swal/swal.css"/>
 
 <!-- Edit User Modal -->
-<div class="modal fade" id="editHearingStatusModal" tabindex="-1" role="dialog" aria-labelledby="editHearingStatusModalLabel" aria-hidden="true">
+<div class="modal fade" id="editOwnershipTypeModal" tabindex="-1" role="dialog" aria-labelledby="editOwnershipTypeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="editUserModalLabel">Edit Hearing Status</h5>
+        <h5 class="modal-title" id="editUserModalLabel">Edit Ownership Type</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Edit user form content goes here -->
-          <form id="hearingStatusForm" class="forms-sample" method="post">
+          <form id="ownershipTypeForm" class="forms-sample" method="post">
             
             <div class="form-group">
-              <label for="hearingStatusEditId">Hearing Status Id</label>
-              <input type="text" class="form-control form-control-application-status" name="hearingStatusEditId" id="hearingStatusEditId" disabled>
+              <label for="ownershipTypeEditId">Ownership Type Id</label>
+              <input type="text" class="form-control form-control-ownership-type-edit" name="ownershipTypeEditId" id="ownershipTypeEditId" disabled>
             </div>
             <div class="form-group">
-              <label for="hearingStatusEditName">Hearing Status</label>
-               <input type="text" id="hearingStatusEditName" name ="hearingStatusEditName" class="form-control form-control-application-status" >
+              <label for="ownershipTypeEditName">Ownership Type</label>
+               <input type="text" id="ownershipTypeEditName" name ="ownershipTypeEditName" class="form-control form-control-ownership-type-edit" >
             </div>
             <div class="form-group">
-              <label for="hearingStatusEditDescription" >Hearing Status Description</label>
-              <textarea class="form-control form-control-application-status" name ="hearingStatusEditDescription" id="hearingStatusEditDescription" rows="4" ></textarea>
+              <label for="ownershipTypeEditDescription" >Ownership Type Description</label>
+              <textarea class="form-control form-control-ownership-type-edit" name ="ownershipTypeEditDescription" id="ownershipTypeEditDescription" rows="4" ></textarea>
             </div>
 
      
-            <button type="button" class="btn btn-primary mr-2" id="editHearingStatusSubmitBtn">Edit</button>
-            <button type="button" class="btn btn-dark hearingStatusEditCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
+            <button type="button" class="btn btn-primary mr-2" id="editOwnershipTypeSubmitBtn">Edit</button>
+            <button type="button" class="btn btn-dark ownershipTypeEditCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
           </form>
       </div>
     </div>
@@ -43,18 +43,34 @@
 
 <script>
   
-  $('#applicationStatusId').prop('disabled', true)
+  $('#ownershipTypeId').prop('disabled', true)
 
+  //GENERATE APPLICATION STATUS ID
+  function generateId(){
+    $.ajax({
+      url: "../../controller/ownership_type_management/generateOwnershipTypeId.php",
+      type: "POST",
+      data:{},
+      success: function(response){
+        console.log(response.trim());
+        $('#ownershipTypeId').val(response.trim());
+      },
+      error: function(xhr, status, error){
+
+      }
+    })
+  }
+  //END OF GENERATE APPLICATION STATUS ID
 
   //ADDING DOCUMENT APPLICATION STATUS
-  function editHearingStatus(){
+  function editOwnershipType(){
     $.ajax({
-      url: "../../controller/hearing_status_management/editHearingStatus.php",
+      url: "../../controller/ownership_type_management/editOwnershipType.php",
       type: "POST",
       data:{
-        hearingStatusId: $('#hearingStatusEditId').val().trim(),
-        hearingStatusName: $('#hearingStatusEditName').val().trim(),
-        hearingStatusDescription: $('#hearingStatusEditDescription').val().trim(),
+        ownershipTypeId: $('#ownershipTypeEditId').val().trim(),
+        ownershipTypeName: $('#ownershipTypeEditName').val().trim(),
+        ownershipTypeDescription: $('#ownershipTypeEditDescription').val().trim(),
       },
       dataType: 'json',
       success: function(response){
@@ -62,7 +78,7 @@
       if (response.status === "success") {
         // Display SweetAlert success message
         Swal.fire({
-          title: "Hearing Status added successfully!",
+          title: "Ownership Type added successfully!",
           icon: "success",
           button: "OK",
           closeOnClickOutside: false,
@@ -80,8 +96,8 @@
           if (value) {
             // Perform any additional action
             generateId();
-            fetchHearingStatus();
-            window.location= "hearingStatusManagement.php"
+            fetchOwnershipType();
+            window.location= "ownershipTypeManagement.php"
           }
         });
       } else {
@@ -112,7 +128,7 @@
       // Display SweetAlert error message for AJAX error (if necessary)
       Swal.fire({
         title: "Error!",
-        text: "An error occurred while editing hearing status.",
+        text: "An error occurred while adding the application status.",
         icon: "error",
         button: "OK",
         closeOnClickOutside: false,
@@ -133,24 +149,29 @@
 generateId();
 
   //VALIDATION OF FIELDS
-  function isEmptyField(){
-    var isEmptyField = false;
-    if($('#hearingStatusEditName').val().trim() === ""){
-      var isEmptyField = true;
-    }
+  function isEmptyField(inputs) {
+    var $inputs = $(inputs); // Ensure inputs are wrapped in jQuery
 
-    if($('#hearingStatusEditDescription').val().trim() === ""){
-      var isEmptyField = true;
-    }
+    var isEmptyField = false;
+    
+    $inputs.each(function() {
+        if ($(this).val().trim() === '') {
+            isEmptyField = true;
+            return false; // Exit the loop early if any field is empty
+        }
+    });
+    
     return isEmptyField;
-  }
+}
+
+
   //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
-  $('#editHearingStatusSubmitBtn').on('click', function(e){
+  $('#editOwnershipTypeSubmitBtn').on('click', function(e){
     e.preventDefault();
 
-    if(isEmptyField()){
+    if(isEmptyField('.form-control-ownership-type-edit')){
       alert('Empty Field')
       
     }else{
@@ -170,7 +191,8 @@ generateId();
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          editHearingStatus();
+          editOwnershipType();
+          window.location= "ownershipTypeManagement.php"
         }
       });
     }

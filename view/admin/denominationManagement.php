@@ -44,9 +44,21 @@
           <!-- content-wrapper starts-->
           <div class="content-wrapper">
 
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Denomination Management</h4>
+          <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Denomination</h4>
+                    </div>
+                 
+                    <div class="col-md-4">
+                      
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                        
+                    </div>
+                  </div>
+                </div>
                         <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-primary btn-fw " data-toggle="modal" data-target="#addDenominationManagementModal">Add Denomination</button>
                         </div>
@@ -136,10 +148,12 @@
                             <td>${denomination.denomination_id}</td>
                             <td>${denomination.denomination_code_name}</td>
                             <td>${denomination.denomination_name}</td>
+                            <td hidden>${denomination.denomination_description}</td>
                             <td>${denomination.denomination_created_at}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning editBtn" data-id="${denomination.denomination_id}">Edit</button>
-                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${denomination.denomination_id}">Delete</button>
+                                <button class="btn btn-sm btn-primary view-button" data-toggle="modal" data-target="#viewDenominationModal" data-id="${denomination.denomination_id}" >View</button>
+                                <button class="btn btn-sm btn-secondary edit-button" data-toggle="modal" data-target="#editDenominationModal" data-id="${denomination.denomination_id}">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-button" data-toggle="modal" data-target="#deleteDenominationModal" data-id="${denomination.denomination_id}">Delete</button>                                
                             </td>
                         </tr>`;
                         tbody.append(row);
@@ -152,7 +166,7 @@
             });
         }
 
-        // Call fetchDocumentTypes on page load
+        // Call fetchDenominations on page load
         fetchDenomination();
         
 
@@ -162,7 +176,96 @@
    
 
   //END OF DISPLAYING DATA
+
+  //OPENING ADD APPLICATION STATUS MODAL
+  $('#addDenominationBtnModalShow').on('click', function(){
+          console.log('goods')
+          
+        })
+  //OPENING ADD APPLICATION STATUS MODAL
+
+  //VIEWING OF INFORMATION
+  $(document).ready(function() {
+  $('.view-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Denomination ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Denomination Name
+    var statusCodeName = $(this).closest('tr').find('td:eq(2)').text().trim(); // Denomination Name
+    var statusDescription = $(this).closest('tr').find('td:eq(3)').text().trim(); // Denomination Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(4)').text().trim(); // Denomination Created At
+    console.log('Denomination ID:', statusId);
+    console.log('Denomination Code:', statusName);
+    console.log('Denomination Code Name:', statusCodeName);
+    console.log('Denomination Description:', statusDescription);
+    console.log('Denomination Created At:', createdAt);
+    $('#denominationViewId').val(statusId)
+    $('#denominationViewName').val(statusName)
+    $('#denominationViewCodeName').val(statusCodeName)
+    $('#denominationViewDescription').val(statusDescription)
+    $('#denominationViewCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+
+  $('.edit-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Denomination ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Denomination Name
+    var statusCodeName = $(this).closest('tr').find('td:eq(2)').text().trim(); // Denomination Name
+    var statusDescription = $(this).closest('tr').find('td:eq(3)').text().trim(); // Denomination Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(4)').text().trim(); // Denomination Created At
+    console.log('Denomination ID:', statusId);
+    console.log('Denomination Name:', statusName);
+    console.log('Denomination Code Name:', statusCodeName);
+    console.log('Denomination Description:', statusDescription);
+    console.log('Denomination Created At:', createdAt);
+    $('#denominationEditId').val(statusId)
+    $('#denominationEditName').val(statusName)
+    $('#denominationEditCodeName').val(statusCodeName)
+    $('#denominationEditDescription').val(statusDescription)
+    $('#denominationEditCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+});
+
+
+  //   console.log($(this));
+  // })
+  //END OF VIEWING OF INFORMATION
+        // Function to filter table rows based on search input
+        function filterTableRows() {
+            const searchQuery = $('#searchInput').val().toLowerCase();
+            $('#denominationManagementTableBody tr').each(function() {
+                // Collect text from searchable columns only (excluding "Date Created" and "Functions")
+                const searchableText = $(this).find('td').not(':nth-child(4)').text().toLowerCase();
+                $(this).toggle(searchableText.includes(searchQuery));
+            });
+        }
+
+
+
+        // Event listener for search input field to filter as user types
+        $('#searchInput').on('keyup', function() {
+            filterTableRows();
+        });
 </script>
-<?php include_once('denominationManagementAddModal.php');?>
+<?php 
+include_once('denominationManagementAddModal.php');
+include_once('denominationViewModal.php');
+include_once('denominationEditModal.php');
+?>
   </body>
 </html>

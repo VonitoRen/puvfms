@@ -6,35 +6,35 @@
 <link rel="stylesheet" href="../../swal/swal.css"/>
 
 <!-- Edit User Modal -->
-<div class="modal fade" id="editHearingStatusModal" tabindex="-1" role="dialog" aria-labelledby="editHearingStatusModalLabel" aria-hidden="true">
+<div class="modal fade" id="editDocumentTypeModal" tabindex="-1" role="dialog" aria-labelledby="editDocumentTypeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="editUserModalLabel">Edit Hearing Status</h5>
+        <h5 class="modal-title" id="editUserModalLabel">Edit Document Type</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Edit user form content goes here -->
-          <form id="hearingStatusForm" class="forms-sample" method="post">
+          <form id="documentTypeForm" class="forms-sample" method="post">
             
             <div class="form-group">
-              <label for="hearingStatusEditId">Hearing Status Id</label>
-              <input type="text" class="form-control form-control-application-status" name="hearingStatusEditId" id="hearingStatusEditId" disabled>
+              <label for="documentTypeEditId">Document Type Id</label>
+              <input type="text" class="form-control form-control-application-status" name="documentTypeEditId" id="documentTypeEditId" disabled>
             </div>
             <div class="form-group">
-              <label for="hearingStatusEditName">Hearing Status</label>
-               <input type="text" id="hearingStatusEditName" name ="hearingStatusEditName" class="form-control form-control-application-status" >
+              <label for="documentTypeEditName">Document Type</label>
+               <input type="text" id="documentTypeEditName" name ="documentTypeEditName" class="form-control form-control-application-status" >
             </div>
             <div class="form-group">
-              <label for="hearingStatusEditDescription" >Hearing Status Description</label>
-              <textarea class="form-control form-control-application-status" name ="hearingStatusEditDescription" id="hearingStatusEditDescription" rows="4" ></textarea>
+              <label for="documentTypeEditDescription" >Document Type Description</label>
+              <textarea class="form-control form-control-application-status" name ="documentTypeEditDescription" id="documentTypeEditDescription" rows="4" ></textarea>
             </div>
 
      
-            <button type="button" class="btn btn-primary mr-2" id="editHearingStatusSubmitBtn">Edit</button>
-            <button type="button" class="btn btn-dark hearingStatusEditCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
+            <button type="button" class="btn btn-primary mr-2" id="editDocumentTypeSubmitBtn">Edit</button>
+            <button type="button" class="btn btn-dark documentTypeEditCloseBtn" data-dismiss="modal" id="cancelBtn">Cancel</button>
           </form>
       </div>
     </div>
@@ -43,18 +43,34 @@
 
 <script>
   
-  $('#applicationStatusId').prop('disabled', true)
+  $('#documentTypeId').prop('disabled', true)
 
+  //GENERATE APPLICATION STATUS ID
+  function generateId(){
+    $.ajax({
+      url: "../../controller/document_type_management/generateDocumentTypeId.php",
+      type: "POST",
+      data:{},
+      success: function(response){
+        console.log(response.trim());
+        $('#documentTypeId').val(response.trim());
+      },
+      error: function(xhr, status, error){
+
+      }
+    })
+  }
+  //END OF GENERATE APPLICATION STATUS ID
 
   //ADDING DOCUMENT APPLICATION STATUS
-  function editHearingStatus(){
+  function editDocumentType(){
     $.ajax({
-      url: "../../controller/hearing_status_management/editHearingStatus.php",
+      url: "../../controller/document_type_management/editDocumentType.php",
       type: "POST",
       data:{
-        hearingStatusId: $('#hearingStatusEditId').val().trim(),
-        hearingStatusName: $('#hearingStatusEditName').val().trim(),
-        hearingStatusDescription: $('#hearingStatusEditDescription').val().trim(),
+        documentTypeId: $('#documentTypeEditId').val().trim(),
+        documentTypeName: $('#documentTypeEditName').val().trim(),
+        documentTypeDescription: $('#documentTypeEditDescription').val().trim(),
       },
       dataType: 'json',
       success: function(response){
@@ -62,7 +78,7 @@
       if (response.status === "success") {
         // Display SweetAlert success message
         Swal.fire({
-          title: "Hearing Status added successfully!",
+          title: "Document Type added successfully!",
           icon: "success",
           button: "OK",
           closeOnClickOutside: false,
@@ -80,8 +96,8 @@
           if (value) {
             // Perform any additional action
             generateId();
-            fetchHearingStatus();
-            window.location= "hearingStatusManagement.php"
+            fetchDocumentType();
+            window.location= "documentTypeManagement.php"
           }
         });
       } else {
@@ -112,7 +128,7 @@
       // Display SweetAlert error message for AJAX error (if necessary)
       Swal.fire({
         title: "Error!",
-        text: "An error occurred while editing hearing status.",
+        text: "An error occurred while adding the application status.",
         icon: "error",
         button: "OK",
         closeOnClickOutside: false,
@@ -135,11 +151,11 @@ generateId();
   //VALIDATION OF FIELDS
   function isEmptyField(){
     var isEmptyField = false;
-    if($('#hearingStatusEditName').val().trim() === ""){
+    if($('#documentTypeEditName').val().trim() === ""){
       var isEmptyField = true;
     }
 
-    if($('#hearingStatusEditDescription').val().trim() === ""){
+    if($('#documentTypeEditDescription').val().trim() === ""){
       var isEmptyField = true;
     }
     return isEmptyField;
@@ -147,7 +163,7 @@ generateId();
   //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
-  $('#editHearingStatusSubmitBtn').on('click', function(e){
+  $('#editDocumentTypeSubmitBtn').on('click', function(e){
     e.preventDefault();
 
     if(isEmptyField()){
@@ -170,7 +186,8 @@ generateId();
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          editHearingStatus();
+          editDocumentType();
+          window.location= "documentTypeManagement.php"
         }
       });
     }

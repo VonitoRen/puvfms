@@ -9,7 +9,7 @@
   <div class="modal-dialog modal-dialog-centered" role="ownership">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="addOwnershipTypeModalLabel">Edit Ownership Type</h5>
+        <h5 class="modal-title" id="addOwnershipTypeModalLabel">Add Ownership Type</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -20,17 +20,17 @@
 
 <div class="form-group">
     <label for="ownershipTypeIdInput">Ownership Type Id</label>
-    <input type="text" class="form-control form-control-ownership-type" name="ownershipTypeIdInput" id="ownershipTypeIdInput">
+    <input type="text" class="form-control form-control-ownership-type-add" name="ownershipTypeIdInput" id="ownershipTypeIdInput">
 </div>
 
 <div class="form-group">
     <label for="ownershipTypeNameInput">Ownership Type Name</label>
-    <input type="text" class="form-control form-control-ownership-type" id="ownershipTypeNameInput" name="ownershipTypeNameInput" placeholder="Ownership Type Name">
+    <input type="text" class="form-control form-control-ownership-type-add" id="ownershipTypeNameInput" name="ownershipTypeNameInput" placeholder="Ownership Type Name">
 </div>
 
 <div class="form-group">
     <label for="ownershipTypeDescriptionInput">Ownership Type Description</label>
-    <textarea class="form-control form-control-ownership-type" name="ownershipTypeDescriptionInput" id="ownershipTypeDescriptionInput" rows="4"></textarea>
+    <textarea class="form-control form-control-ownership-type-add" name="ownershipTypeDescriptionInput" id="ownershipTypeDescriptionInput" rows="4"></textarea>
 </div>
 <button id="addOwnershipTypeSubmitBtn" class="btn btn-primary mr-2">Submit</button>
 <button type="button" class="btn btn-dark ownershipTypeAddCloseBtn" data-dismiss="modal" >Cancel</button>
@@ -146,25 +146,13 @@
 generateId();
 
 
-  //VALIDATION OF FIELDS
-    function isEmptyField(){
-      var isEmptyField = false;
-      if($('#ownershipTypeNameInput').val().trim() === ""){
-        var isEmptyField = true;
-      }
 
-      if($('#ownershipTypeDescriptionInput').val().trim() === ""){
-        var isEmptyField = true;
-      }
-      return isEmptyField;
-    }
-  //END OF VALIDATION OF FIELDS
 
   //SUBMIT BUTTON FUNCTION
     $('#addOwnershipTypeSubmitBtn').on('click', function(e){
       e.preventDefault();
 
-      if(isEmptyField()){
+      if(isEmptyField('.form-control-ownership-type-add')){
         alert('Empty Field')
 
       }else{
