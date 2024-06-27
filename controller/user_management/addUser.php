@@ -63,12 +63,14 @@ function getLatestUserId($pdo){
 }
 
 function addUser($userData,$incrementedUserId,$pdo){
+
+
     try {
         $stmt = $pdo->prepare("INSERT INTO tbl_user (user_id, email, password, user_status, user_created_at, user_level) VALUES (?,?,?,?,?,?)");
 
         $userId = $incrementedUserId;
         $email = $userData['addUserEmail'];
-        $password = password_hash($userData['addUserPassword'], PASSWORD_BCRYPT); // Hash the password before storing
+        $password = password_hash($incrementedUserId, PASSWORD_BCRYPT); // Hash the password before storing
         $userStatus = 1;
         $userCreatedAt = date('Y-m-d H:i:s'); // Current timestamp
         $userLevel = $userData['addUserLevel'];
@@ -97,9 +99,23 @@ function addUserInfo($userData, $pdo, $incrementedUserId){
 
         $userId = $incrementedUserId;
         $userFirstName = $userData['addUserFirstName'];
-        $userMiddleName = $userData['addUserMiddleName'];
+
+        $userMiddleName = "";
+        if($userData['addUserMiddleName'] === ""){
+            $userMiddleName = "";
+        }else{
+            $userMiddleName = $userData['addUserMiddleName'];
+        }
+        
         $userLastName = $userData['addUserLastName'];
-        $userSuffix = $userData['addUserSuffix'];
+        $userSuffix = "";
+
+        if($userData['addUserSuffix'] === "none"){
+            $userSuffix = "";
+        }else{
+            $userSuffix = $userData['addUserSuffix'];
+        }
+
 
         $dateString = $userData['addUserBirthdate'];
 
@@ -117,7 +133,16 @@ function addUserInfo($userData, $pdo, $incrementedUserId){
         $userCityMunicipality = $userData['addUserCity'];
         $userBarangay = $userData['addUserBarangay'];
         $userStreet = $userData['addUserStreet'];
-        $userPhoneNumber = $userData['addUserPhoneNumber'];
+
+        function cleanPhoneNumber($phoneNumber) {
+            // Remove the '+' sign and spaces
+            $cleanedNumber = str_replace(['+', ' '], '', $phoneNumber);
+            return $cleanedNumber;
+        }
+    
+
+
+        $userPhoneNumber =  cleanPhoneNumber($userData['addUserPhoneNumber']);
         $userSex = $userData['addUserSex'];
         $userDeparment = $userData['addUserDepartment'];
 

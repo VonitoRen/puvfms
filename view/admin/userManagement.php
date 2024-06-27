@@ -128,61 +128,7 @@
   <!-- endinject -->
   <!-- Custom js for this page -->
   <script>
-    function displayUser(){
-      $.ajax({
-      url:'../../controller/user_management/displayUser.php',
-      type: 'post',
-      dataType: 'json',
-      success: function(data){
-        console.log(data);
-        console.log('hello')
-        $('#userTableBody').empty();
-                   if (data.length === 0) {
-                       var noDataRow = `<tr>
-                           <td colspan="5" class="text-center">NO RECORD FOUND</td>
-                       </tr>`;
-                       tbody.append(noDataRow);
-                   } else {
-                    $.each(data, function(index, value){
-          var row = $('<tr></tr>');
-          row.append('<td>' + value.user_id + '</td>');
-          row.append('<td>' + value.fullname + '</td>');
-          row.append('<td>' + value.department_name + '</td>');
-          row.append('<td>' + value.user_status + '</td>');
-          row.append('<td>' + value.user_level_name + '</td>');
-          row.append('<td>' + value.user_created_at + '</td>');
-          row.append('<td>' + 
-          '<button type="button" class="btn btn-primary btn-fw w-25 editUserBtn" data-userid="' + value.user_id + '" data-toggle="modal" data-target="#editUserModal">Edit User</button> ' +
-          '<button type="button" class="btn btn-danger btn-fw w-25 deleteUserBtn" data-userid="' + value.user_id + '" data-toggle="modal" data-target="#deleteUserModal">Delete User</button>' +
-            '</td>');
-
-
-
-            $('#userTableBody').append(row);
-          // Event delegation for dynamically added buttons
-          $('#userTableBody').on('click', '.editUserBtn', function(){
-            var userId = $(this).data('userid');
-            console.log('Edit button clicked for user ID: ' + userId);
-            // Perform edit action, e.g., open modal, etc.
-          });
-
-          $('#userTableBody').on('click', '.deleteUserBtn', function(){
-            var userId = $(this).data('userid');
-            console.log('Delete button clicked for user ID: ' + userId);
-            // Perform delete action, e.g., show confirmation dialog, etc.
-          });
-
-        });
-                   }
-
-      },
-      error: function(xhr, status, error){
-
-      }
-    })
-
-    }
-    displayUser();
+  $(document).ready(function() {    
 
     //OPEN EDIT USER MODAL
     // Additional JavaScript to handle form submission, etc.
@@ -194,11 +140,53 @@
     //END OF OPEN EDIT USER MODAL
     $('#addUserModal, #editUserModal, #deleteUserModal, .userAddCloseBtn').on('hidden.bs.modal', function (e) {
         $('.modal-backdrop').remove(); // Manually remove the backdrop
-        });        
+        });       
+        
+
+  $('.view-button').on('click', function() {
+    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application Status ID
+    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application Status Name
+    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Application Status Description (hidden)
+    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Application Status Created At
+    console.log('Application Status ID:', statusId);
+    console.log('Application Status Name:', statusName);
+    console.log('Application Status Description:', statusDescription);
+    console.log('Application Status Created At:', createdAt);
+    $('#applicationStatusViewId').val(statusId)
+    $('#applicationStatusViewName').val(statusName)
+    $('#applicationStatusViewDescription').val(statusDescription)
+    $('#applicationStatusViewCreatedAt').val(createdAt)
+    // Optionally, retrieve other data from the table row if needed
+    // var status = $(this).closest('tr').find('td:first').text(); 
+    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
+    
+    // Perform actions based on the button click
+    // For example, open a modal or navigate to another page
+    
+    // Example: Open a modal (replace '#viewModal' with your modal ID)
+    // $('#viewModal').modal('show');
+  });
+
+  $('.edit-button').on('click', function() {
+    var userId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application Status ID
+
+    console.log('User ID:', userId);
+
+    // $('#applicationStatusEditId').val(statusId)
+    // $('#applicationStatusEditName').val(statusName)
+    // $('#applicationStatusEditDescription').val(statusDescription)
+    // $('#applicationStatusEditCreatedAt').val(createdAt)
+  });
+  
+
+});
+      
   </script>
     <?php
-    include_once('userManagementEditModal.php');
+
     include_once('userManagementAddModal.php');
+    include_once('userManagementEditModal.php');
+    include_once('../../assets/js/formValidation.php'); 
     ?>  
   <!-- End custom js for this page -->
   </body>

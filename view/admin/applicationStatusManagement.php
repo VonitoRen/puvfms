@@ -177,7 +177,7 @@
   //OPENING ADD APPLICATION STATUS MODAL
 
   //VIEWING OF INFORMATION
-  $(document).ready(function() {
+$(document).ready(function() {
   $('.view-button').on('click', function() {
     var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application Status ID
     var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application Status Name

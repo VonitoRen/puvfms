@@ -2,7 +2,7 @@
 include_once('../static/conn.php');
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     //GET DATA FROM SERVER
-    $email = $_POST['email'];
+    $email = strtolower($_POST['email']);
     $password = $_POST['password'];
 
     //validate if email is correct

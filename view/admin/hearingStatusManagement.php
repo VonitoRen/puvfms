@@ -185,6 +185,7 @@ $(document).ready(function() {
   });
 
   $('.edit-button').on('click', function() {
+    console.log('hello')
     var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application Status ID
     var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application Status Name
     var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Application Status Description (hidden)
@@ -209,7 +210,11 @@ $(document).ready(function() {
   });
 });  
 </script>
-<?php include_once('hearingStatusAddModal.php');?>
-<?php include_once('hearingStatusEditModal.php');?>
+<?php 
+include_once('hearingStatusAddModal.php');
+include_once('hearingStatusEditModal.php');
+include_once('hearingStatusViewModal.php');
+?>
+
   </body>
 </html>
