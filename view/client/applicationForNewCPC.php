@@ -39,22 +39,33 @@
                         <h4 class="fs-2">Primary Requirements:<br></h4>
                         <hr>
                         <div class="form-group">
-                            <label for="newCPCApplication" class="form-label">1. Template of Application for New CPC.</label>
-                            <input class="form-control" type="file" id="newCPCApplication" multiple>
+                            <label for="input1" class="form-label">Template of Application for New CPC.</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="input1" multiple>
                         </div>
 
                         <div class="form-group">
-                            <label for="notirizationProofApplication" class="form-label">2. Proof of notarization of application/petition form.</label>
-                            <input class="form-control" type="file" id="notirizationProofApplication" multiple>
+                            <label for="input2" class="form-label">Proof of notarization of application/petition form.</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="input2" multiple>
                         </div>
 
-    
+                        <div class="form-group">
+                            <label for="rfoAdoptingOnlineHearing" class="form-label">Are you a RFRO adopting Online Hearing?</label>
+                            <select name="rfoAdoptingOnlineHearing" id="rfoAdoptingOnlineHearing" class="form-control mb-3">
+                                <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                            <div id="rfoAdoptingOnlineHearingRequirement" hidden>
+                            <label for="input3" class="form-label">Attestation (as to the authenticity and truthfulness of the documents submitted).</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="input3" multiple>
+                            </div>
+                        </div>                        
 
 
-                        <!-- <hr>
+                        <hr>
                         <h4 class="fs-2">Additional Requirements:<br></h4>
                         <hr>
-
+                        <!--
                         <div class="form-group">
                             <label for="formFile" class="form-label">1. Four (4) copies of Verified Application alleging proof of citizenship and
                             financial capacity with annexes and verification and certification of NonForum Shopping; </label>
@@ -109,15 +120,73 @@
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
     <script>
+    $(document).ready(function() {
         $('#logoutBtn').on('click', function () {
             alert('gumagana');
             window.location = "../../index.php";
         })
 
-        $('#newCPCStatusSubmitBtn').on('click', function(e){
-            e.preventDefault();
-            console.log('hello')
+        $('#rfoAdoptingOnlineHearing').on('change', function(){
+            if($(this).val() === 'Yes'){
+                $('#rfoAdoptingOnlineHearingRequirement').prop('hidden', false);
+            }else{
+                $('#rfoAdoptingOnlineHearingRequirement').prop('hidden', true);
+            }
+
         })
+
+        $('#newCPCStatusSubmitBtn').on('click', function(e) {
+            e.preventDefault();
+            var isValid = true;
+            $('[id^=input]').each(function() {
+                var inputVal = $(this).val().trim();
+                if (inputVal === '') {
+                    isValid = false;
+                    return false; // Exit loop early if any field is empty
+                }
+            });
+
+            if(!isValid){
+                console.log("please fill up")
+                return;
+            }
+            
+            function uploadFile(){
+                var formData = new FormData();
+
+
+                // Loop through each input and append to formData
+                for (var i = 1; i <= 10; i++) {
+                    var inputVal = $('#input' + i).val();
+                    formData.append('inputs[' + i + ']', inputVal);
+                }
+
+                // Additional condition for input5 based on isCarDriver selection
+                if ($('#isCarDriver').val() === 'yes') {
+                    var input5Val = $('#input5').val();
+                    formData.append('input5', input5Val);
+                }
+
+                $.ajax({
+                   url: '../../controller/application_management/uploadApplicationFile.php', // URL to your PHP upload script
+                   type: 'POST',
+                   data: formData,
+                   processData: false,
+                   contentType: false,
+                   beforeSend: function() {
+
+                   },
+                   success: function(response) {
+                    console.log(response)
+                   },
+                   error: function(xhr, status, error) {
+       
+                   }
+               });
+            }
+        });
+    });
+   
     </script>
 </body>
 

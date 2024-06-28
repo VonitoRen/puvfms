@@ -101,7 +101,7 @@
       } else {
         // Display SweetAlert error message (if necessary)
         Swal.fire({
-          title: "Error!",
+          title: response.message,
           text: response.message,
           icon: "error",
           button: "OK",
@@ -125,7 +125,7 @@
 
       // Display SweetAlert error message for AJAX error (if necessary)
       Swal.fire({
-        title: "Error!",
+        title: "Error",
         text: "An error occurred while adding the application status.",
         icon: "error",
         button: "OK",
