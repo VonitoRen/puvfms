@@ -39,22 +39,19 @@
                         <h4 class="fs-2">Primary Requirements:<br></h4>
                         <hr>
                         <div class="form-group">
-                            <label for="formFile" class="form-label">1. Template of Application for New CPC.</label>
-                            <input class="form-control" type="file" id="formFile" multiple>
+                            <label for="newCPCApplication" class="form-label">1. Template of Application for New CPC.</label>
+                            <input class="form-control" type="file" id="newCPCApplication" multiple>
                         </div>
 
                         <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">2. Proof of notarization of application/petition form.</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
+                            <label for="notirizationProofApplication" class="form-label">2. Proof of notarization of application/petition form.</label>
+                            <input class="form-control" type="file" id="notirizationProofApplication" multiple>
                         </div>
 
-                        <div class="form-group align-items-center">
-                            <input type="checkbox" class="form-check-input mr-2" id="exampleCheck1">
-                            <p class="mb-0 ">For RFRO adopting Online Hearing:</p>
-                        </div>
+    
 
 
-                        <hr>
+                        <!-- <hr>
                         <h4 class="fs-2">Additional Requirements:<br></h4>
                         <hr>
 
@@ -79,7 +76,7 @@
                             <label for="formFileMultiple" class="form-label">4. Authorization from the Department of Transportation (DOTr) for applicable
                             types of service (PUB, TX, PUJ, UV, TNVS and P2P);</label>
                             <input class="form-control" type="file" id="formFileMultiple" multiple>
-                        </div>
+                        </div> -->
 
                         <button id="newCPCStatusSubmitBtn" class="btn btn-primary mr-2">Submit</button>                  
                         <button type="button" class="btn btn-dark newCPCStatusAddCloseBtn" data-dismiss="modal">Cancel</button>
