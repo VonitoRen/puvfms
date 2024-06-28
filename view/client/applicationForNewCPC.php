@@ -28,7 +28,7 @@
 <body>
     <div class="container p-5 form-sample">
         <div class="card">
-            <form action="">
+            <form action="" id="newCPCForm">
                 <div class="container p-5 form-sample pre-scrollable">
                     <form action="">
                         <h4 class="fs-2">APPLICATION FOR ISSUANCE FOR A NEW CERTIFICATE OF PUBLIC CONVENIENCE <br></h4>
@@ -39,25 +39,25 @@
                         <h4 class="fs-2">Primary Requirements:<br></h4>
                         <hr>
                         <div class="form-group">
-                            <label for="input1" class="form-label">Template of Application for New CPC.</label>
-                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="input1" multiple>
+                            <label for="file1" class="form-label">Template of Application for New CPC.</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file1" required multiple>
                         </div>
 
                         <div class="form-group">
-                            <label for="input2" class="form-label">Proof of notarization of application/petition form.</label>
-                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="input2" multiple>
+                            <label for="file2" class="form-label">Proof of notarization of application/petition form.</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file2" required multiple>
                         </div>
 
                         <div class="form-group">
-                            <label for="rfoAdoptingOnlineHearing" class="form-label">Are you a RFRO adopting Online Hearing?</label>
-                            <select name="rfoAdoptingOnlineHearing" id="rfoAdoptingOnlineHearing" class="form-control mb-3">
+                            <label for="divQuestion1" class="form-label">Are you a RFRO adopting Online Hearing?</label>
+                            <select name="divQuestion1" id="divQuestion1" class="form-control mb-3" required>
                                 <option value="" selected disabled>Please select an option (Mandatory).</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
-                            <div id="rfoAdoptingOnlineHearingRequirement" hidden>
-                            <label for="input3" class="form-label">Attestation (as to the authenticity and truthfulness of the documents submitted).</label>
-                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="input3" multiple>
+                            <div id="divQuestion1Requirement" hidden>
+                            <label for="file3" class="form-label">Attestation (as to the authenticity and truthfulness of the documents submitted).</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file3" required multiple>
                             </div>
                         </div>                        
 
@@ -65,29 +65,144 @@
                         <hr>
                         <h4 class="fs-2">Additional Requirements:<br></h4>
                         <hr>
-                        <!--
                         <div class="form-group">
-                            <label for="formFile" class="form-label">1. Four (4) copies of Verified Application alleging proof of citizenship and
-                            financial capacity with annexes and verification and certification of NonForum Shopping; </label>
-                            <input class="form-control" type="file" id="formFile" multiple>
-                        </div>
+                            <hr>
+                            <label for="file4" class="form-label">LTO OR/CR of authorized unit/s with year model?</label>
+                            <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file4" required multiple>
+                            <hr>
+                            <label for="divQuestion2" class="form-label">What is the curret status of your unit?</label>
+                            <select name="divQuestion2" id="divQuestion2" class="form-control" required>
+                                <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                <option value="1">N/A</option>
+                                <option value="2">Encumbered</option>
+                                <option value="3">Leased</option>
+                                <option value="4">Imported or Rebuilt</option>
+                            </select>
+                           
+                            <!-- OPTIONS-->
+                            <div id="divQuestion2Requirement1" class="divQuestion2Requirement mt-3" hidden>
+                                <label for="file5" class="form-label">Certificate of Conformity</label>
+                                <input class="form-control form-control-mandatory " accept=".pdf,.jpg,.jpeg,.png" type="file" id="file5" required multiple>
+                            </div>
+
+                            <div id="divQuestion2Requirement2" class="divQuestion2Requirement mt-3"  hidden>
+                                <label for="file6" class="form-label">Affidavit of Undertaking</label>
+                                <input class="form-control form-control-mandatory " accept=".pdf,.jpg,.jpeg,.png" type="file" id="file6" required multiple>
+                            </div>
+
+                            <div id="divQuestion2Requirement3" class="divQuestion2Requirement mt-3"  hidden>
+                                <label for="file7" class="form-label">Certificate of Year Model (JAO 2014- 02) TH</label>
+                                <input class="form-control form-control-mandatory " accept=".pdf,.jpg,.jpeg,.png" type="file" id="file7" required multiple>
+                            </div>
+                            <hr>
+
+                        </div>  
 
                         <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">2. Authorization from the Department of Transportation (DOTr) for applicable
-                            types of service (PUB, TX, PUJ, UV, TNVS and P2P);</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
+                            <label for="divQuestion3" class="form-label">Are you considered as either partnership, corpration, cooperative and individual PUJ operator?</label>
+                            <select name="divQuestion3" id="divQuestion3" class="form-control mb-3" required>
+                                <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+
+                            <div id="divQuestion3Requirement1" hidden>
+                                <label for="file7" class="form-label">Certificate of Business Name.</label>
+                                <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file7" required multiple>
+                            </div>
+                        </div>  
+
+                        <hr>
+
+                        <h4 class="fs-2">Proof of Citizenship:<br></h4>
+                        <hr>
+                        <div class="form-group">
+                            <label for="divQuestion4" class="form-label">Are you considered as Individual Application or Juridical Entity?</label>
+                            <select name="divQuestion4" id="divQuestion4" class="form-control mb-3" required>
+                                <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                <option value="1">Individual Applicant</option>
+                                <option value="2">Juridical Entity</option>
+                            </select>
+
+                            <div id="divQuestion4Requirement1" hidden>
+                                <label for="file8" class="form-label">Certificate of Business Name.</label>
+                                <input class="form-control form-control-mandatory"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file8" required multiple>
+                              
+                            </div>
+
+                            <div id="divQuestion4Requirement2" hidden>
+                                <label for="divQuestion5" class="form-label">Are you categorized as Corporation or Cooperative?</label>
+                                <select name="divQuestion5" id="divQuestion5" class="form-control mb-3" required>
+                                    <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                    <option value="1">Corporation</option>
+                                    <option value="2">Cooperative</option>
+                                </select>
+
+                                <div id="divQuestion5Requirement1" hidden>
+                                    <label for="file9" class="form-label">Articles of Partnership/Incorporation and By-laws.</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file9" required multiple>
+
+                                    <label for="file10" class="form-label">Certificate of Registration.</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file10" required multiple>
+                                
+                                </div>    
+
+                                <div id="divQuestion5Requirement2" hidden>
+
+                                    <label for="file10" class="form-label">Articles of Cooperation and By Laws s.</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file10" required multiple>
+
+                                    <label for="file11" class="form-label">Certificate of Registration.</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file11" required multiple>
+
+                                    <label for="file12" class="form-label">Certificate of Good Standing.</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file12" required multiple>
+                                
+                                </div>    
+                            </div>
+                            <hr>
+                        </div>  
+                        <h4 class="fs-2">Proof of Existence and Sufficiency Garage:<br></h4>
+                        <hr>
+                        <div class="form-group">
+                            <label for="divQuestion6" class="form-label">Are you the owner of the unit?</label>
+                            <select name="divQuestion6" id="divQuestion6" class="form-control mb-3" required>
+                                <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
+                            </select>
+
+                                <div id="divQuestion6Requirement1" hidden>
+                                    <label for="file12" class="form-label">Transfer Certificate of Title (TCT)/ Tax Declaration in the name of the applicant.</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file12" required multiple>
+
+                                
+                                </div>    
+
+                                <div id="divQuestion6Requirement2" hidden>
+                                    <label for="file13" class="form-label">Notarized Contract of Lease/Authority to use with TCT of Lessor</label>
+                                    <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file13" required multiple>
+                                </div>
+                                <hr>                                
+                        </div>
+                        <h4 class="fs-2">Proof of Financial Capability:<br></h4>
+                        <hr>
+                        <div class="form-group">
+                            <label for="divQuestion7" class="form-label">Are you a newly registered operator?</label>
+                            <select name="divQuestion7" id="divQuestion7" class="form-control mb-3" required>
+                                <option value="" selected disabled>Please select an option (Mandatory).</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
+                            </select>
+
+                            <div id="divQuestion7Requirement1" hidden>
+                                <label for="file14" class="form-label">Stamped received of Latest Income Tax Return or Certificate of Registration with BIR (Transportation as line of business).</label>
+                                <input class="form-control form-control-mandatory mb-3"  accept=".pdf,.jpg,.jpeg,.png" type="file" id="file14" required multiple>
+                            </div>
+
+                            <hr>                                
                         </div>
 
-                        <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">3. LTO OR/CR of authorized unit/s with year model;</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="formFileMultiple" class="form-label">4. Authorization from the Department of Transportation (DOTr) for applicable
-                            types of service (PUB, TX, PUJ, UV, TNVS and P2P);</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
-                        </div> -->
 
                         <button id="newCPCStatusSubmitBtn" class="btn btn-primary mr-2">Submit</button>                  
                         <button type="button" class="btn btn-dark newCPCStatusAddCloseBtn" data-dismiss="modal">Cancel</button>
@@ -118,76 +233,10 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
+    <script src="../../assets/js/newCPC.js"></script>
     <!-- End custom js for this page -->
-    <script>
-    $(document).ready(function() {
-        $('#logoutBtn').on('click', function () {
-            alert('gumagana');
-            window.location = "../../index.php";
-        })
-
-        $('#rfoAdoptingOnlineHearing').on('change', function(){
-            if($(this).val() === 'Yes'){
-                $('#rfoAdoptingOnlineHearingRequirement').prop('hidden', false);
-            }else{
-                $('#rfoAdoptingOnlineHearingRequirement').prop('hidden', true);
-            }
-
-        })
-
-        $('#newCPCStatusSubmitBtn').on('click', function(e) {
-            e.preventDefault();
-            var isValid = true;
-            $('[id^=input]').each(function() {
-                var inputVal = $(this).val().trim();
-                if (inputVal === '') {
-                    isValid = false;
-                    return false; // Exit loop early if any field is empty
-                }
-            });
-
-            if(!isValid){
-                console.log("please fill up")
-                return;
-            }
-            
-            function uploadFile(){
-                var formData = new FormData();
 
 
-                // Loop through each input and append to formData
-                for (var i = 1; i <= 10; i++) {
-                    var inputVal = $('#input' + i).val();
-                    formData.append('inputs[' + i + ']', inputVal);
-                }
-
-                // Additional condition for input5 based on isCarDriver selection
-                if ($('#isCarDriver').val() === 'yes') {
-                    var input5Val = $('#input5').val();
-                    formData.append('input5', input5Val);
-                }
-
-                $.ajax({
-                   url: '../../controller/application_management/uploadApplicationFile.php', // URL to your PHP upload script
-                   type: 'POST',
-                   data: formData,
-                   processData: false,
-                   contentType: false,
-                   beforeSend: function() {
-
-                   },
-                   success: function(response) {
-                    console.log(response)
-                   },
-                   error: function(xhr, status, error) {
-       
-                   }
-               });
-            }
-        });
-    });
-   
-    </script>
 </body>
 
 </html>
