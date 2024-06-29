@@ -85,6 +85,128 @@ $(document).ready(function() {
         }
     })
 
+    $('#divQuestion8').on('change', function(){
+        $('#divQuestion8Requirement1').prop('hidden', true)
+        $('#divQuestion8Requirement2').prop('hidden', true)
+
+        if($(this).val() == 1){
+            $('#divQuestion8Requirement1').prop('hidden', false)
+        }
+
+        if($(this).val() == 2){
+            $('#divQuestion8Requirement2').prop('hidden', false)
+        }
+    })
+
+    $('#divQuestion9').on('change', function(){
+        $('#divQuestion9Requirement1').prop('hidden', true)
+
+
+        if($(this).val() == 1){
+            $('#divQuestion9Requirement1').prop('hidden', false)
+        }
+    })
+
+    $('#divQuestion10').on('change', function(){
+        $('#divQuestion10Requirement1').prop('hidden', true)
+
+
+        if($(this).val() == 1){
+            $('#divQuestion10Requirement1').prop('hidden', false)
+        }
+    })
+
+    
+    $('#divQuestion11').on('change', function(){
+        $('#divQuestion11Requirement1').prop('hidden', true)
+
+
+        if($(this).val() == 1){
+            $('#divQuestion11Requirement1').prop('hidden', false)
+        }
+    })
+
+    $('#divQuestion12').on('change', function(){
+        $('#divQuestion12Requirement1').prop('hidden', true)
+
+
+        if($(this).val() == 1){
+            $('#divQuestion12Requirement1').prop('hidden', false)
+        }
+    })
+
+    $('#divQuestion13').on('change', function(){
+        $('#divQuestion13Requirement1').prop('hidden', true)
+        $('#divQuestion13Requirement2').prop('hidden', true)
+
+        if($(this).val() == 1){
+            $('#divQuestion13Requirement1').prop('hidden', false)
+        }
+
+        if($(this).val() == 2){
+            $('#divQuestion13Requirement2').prop('hidden', false)
+        }
+    })
+    
+    $('#divQuestion14').on('change', function(){
+        $('#divQuestion14Requirement1').prop('hidden', true)
+
+
+        if($(this).val() == 1){
+            $('#divQuestion14Requirement1').prop('hidden', false)
+        }
+
+
+    })
+
+    $('#divQuestion15').on('change', function(){
+        $('#divQuestion15Requirement1').prop('hidden', true)
+
+
+        if($(this).val() == 1){
+            $('#divQuestion15Requirement1').prop('hidden', false)
+        }
+
+
+    })
+
+    $('#divQuestion16').on('change', function(){
+        $('#divQuestion16Requirement1').prop('hidden', true)
+        $('#divQuestion16Requirement2').prop('hidden', true)
+        $('#divQuestion16Requirement3').prop('hidden', true)
+        $('#divQuestion16Requirement4').prop('hidden', true)
+        $('#divQuestion16Requirement5').prop('hidden', true)
+        $('#divQuestion16Requirement6').prop('hidden', true)
+
+        if($(this).val() == 1){
+            $('#divQuestion16Requirement1').prop('hidden', false)
+        }
+
+        if($(this).val() == 2){
+            $('#divQuestion16Requirement2').prop('hidden', false)
+        }
+
+        if($(this).val() == 3){
+            $('#divQuestion16Requirement3').prop('hidden', false)
+        }
+
+        if($(this).val() == 4){
+            $('#divQuestion16Requirement4').prop('hidden', false)
+        }
+
+        if($(this).val() == 5){
+            $('#divQuestion16Requirement5').prop('hidden', false)
+        }
+
+        if($(this).val() == 66){
+            $('#divQuestion16Requirement6').prop('hidden', false)
+        }
+
+
+
+
+    })
+
 
     
     $('#newCPCStatusSubmitBtn').on('click', function(e) {
