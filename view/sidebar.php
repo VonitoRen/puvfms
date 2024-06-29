@@ -119,7 +119,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href=""> New CPC</a></li>
+                <li class="nav-item"> <a class="nav-link" href="applicationManagement.php"> New CPC</a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Extension of CPC </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Modification of Route </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Change of Name </a></li>
