@@ -1,4 +1,16 @@
 $(document).ready(function() {
+    // Setting file input attributes
+    $('input[type="file"]').attr('accept', '.pdf,.docx,.xlsx,.jpeg,.png');
+    $('input[type="file"]').attr('required', true);
+    $('select').attr('required', true);
+    $('input[type="file"]').attr('accept', '.pdf,.docx,.xlsx,.jpeg,.png');
+    $('input[type="file"]').attr('required', true);
+    $('select').attr('required', true);
+
+    $('#newCPCForm input, #newCPCForm select').each(function() {
+        $(this).prop('required', true);
+    });
+    
     $('#logoutBtn').on('click', function () {
         alert('gumagana');
         window.location = "../../index.php";
@@ -198,7 +210,7 @@ $(document).ready(function() {
             $('#divQuestion16Requirement5').prop('hidden', false)
         }
 
-        if($(this).val() == 66){
+        if($(this).val() == 6){
             $('#divQuestion16Requirement6').prop('hidden', false)
         }
 
@@ -206,22 +218,35 @@ $(document).ready(function() {
 
 
     })
+    // Function to generate applicant number
+    function generateApplicantNumber(callback) {
+        $.ajax({
+            url: '../../controller/application_management/generateApplicantNumber.php',
+            type: 'post',
+            success: function(response) {
+                var applicantNumber = response.trim();
+                callback(applicantNumber); // Pass applicantNumber to callback function
+            },
+            error: function(xhr, status, error) {
+                console.error('Error generating applicant number:', error);
+                callback(null); // Handle error case
+            }
+        });
+    }
 
-
-    
+    // Event handler for form submission
     $('#newCPCStatusSubmitBtn').on('click', function(e) {
         e.preventDefault();
-        var isEmpty = false;
         var formData = new FormData();
-        var responseMessages = [];
-
-        // Check if any required input fields are empty
+        
+        // Check for empty required fields
+        var isEmpty = false;
         $('#newCPCForm input[required], #newCPCForm select[required]').each(function() {
+            $(this).removeClass('is-valid is-invalid');
             if ($(this).is(':visible')) {
                 if ($(this).val() === null || $(this).val() === "") {
                     isEmpty = true;
-                    responseMessages.push('Please fill out the required field: ' + $(this).attr('id'));
-                    // $(this).addClass('is-invalid')
+                    $(this).addClass('is-invalid');
                 } else {
                     if ($(this).attr('type') === 'file') {
                         var files = $(this)[0].files;
@@ -234,45 +259,306 @@ $(document).ready(function() {
                 }
             }
         });
-        console.log (responseMessages)
-        if(isEmpty){
-            console.log("please fill up")
-            return false;
+
+        if (isEmpty) {
+            console.log("Please fill in all required fields.");
+            return;
         }
-        
-        function uploadFile(){
-            var formData = new FormData();
 
+        // Function to upload files
+        function uploadFile(generatedApplicantNumber) {
+            $('input[type="file"][required]').each(function(index, element) {
+                var files = element.files;
+                var inputId = $(this).attr('id');
+                var inputName = $(this).attr('name');
+                var prefix = '';
 
-            // Loop through each input and append to formData
-            for (var i = 1; i <= 10; i++) {
-                var inputVal = $('#input' + i).val();
-                formData.append('inputs[' + i + ']', inputVal);
-            }
+                // Assign prefix based on inputId
+                // Add your prefix logic here as per your requirement
 
-            // Additional condition for input5 based on isCarDriver selection
-            if ($('#isCarDriver').val() === 'yes') {
-                var input5Val = $('#input5').val();
-                formData.append('input5', input5Val);
-            }
+                // Iterate over each file selected in the input
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var fileName = file.name;
+                    var fileExt = fileName.split('.').pop(); // Get file extension
+                    var newName = generatedApplicantNumber + '_' + prefix + '_' + i + '.' + fileExt;
 
+                    formData.append(inputName, file, newName); // Append file with the new name
+                }
+            });
+
+            formData.append('applicantNumber', generatedApplicantNumber);
+
+            // Perform AJAX request to upload files
             $.ajax({
-               url: '../../controller/application_management/uploadApplicationFile.php', // URL to your PHP upload script
-               type: 'POST',
-               data: formData,
-               processData: false,
-               contentType: false,
-               beforeSend: function() {
-
-               },
-               success: function(response) {
-                console.log(response)
-               },
-               error: function(xhr, status, error) {
-   
-               }
-           });
+                url: '../../controller/application_management/uploadApplicationFile.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    // Any actions before sending request
+                },
+                success: function(response) {
+                    console.log('File upload successful:', response);
+                    // Handle success response as needed
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error uploading files:', error);
+                    // Handle error case
+                }
+            });
         }
+
+        // Call generateApplicantNumber to get the number and then upload files
+        generateApplicantNumber(function(applicantNumber) {
+            if (applicantNumber) {
+                console.log('Generated Applicant Number:', applicantNumber);
+                uploadFile(applicantNumber);
+            } else {
+                console.log('Failed to generate applicant number.');
+            }
+        });
     });
+
+    // Additional event handlers for form elements
+    // Handle question change events as needed
 });
 
+
+
+$(document).ready(function() {
+    // Setting file input attributes
+    $('input[type="file"]').attr('accept', '.pdf,.docx,.xlsx,.jpeg,.png');
+    $('input[type="file"]').attr('required', true);
+    $('select').attr('required', true);
+
+    // Function to generate applicant number
+    function generateApplicantNumber(callback) {
+        $.ajax({
+            url: '../../controller/application_management/generateApplicantNumber.php',
+            type: 'post',
+            success: function(response) {
+                var applicantNumber = response.trim();
+                callback(applicantNumber); // Pass applicantNumber to callback function
+            },
+            error: function(xhr, status, error) {
+                console.error('Error generating applicant number:', error);
+                callback(null); // Handle error case
+            }
+        });
+    }
+
+    // Event handler for form submission
+    $('#newCPCStatusSubmitBtn').on('click', function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        
+        // Check for empty required fields
+        var isEmpty = false;
+        $('#newCPCForm input[required], #newCPCForm select[required]').each(function() {
+            $(this).removeClass('is-valid is-invalid');
+            if ($(this).is(':visible')) {
+                if ($(this).val() === null || $(this).val() === "") {
+                    isEmpty = true;
+                    $(this).addClass('is-invalid');
+                } else {
+                    if ($(this).attr('type') === 'file') {
+                        var files = $(this)[0].files;
+                        for (var i = 0; i < files.length; i++) {
+                            formData.append($(this).attr('id') + '[]', files[i]);
+                        }
+                    } else {
+                        formData.append($(this).attr('id'), $(this).val());
+                    }
+                }
+            }
+        });
+
+        if (isEmpty) {
+            console.log("Please fill in all required fields.");
+            return;
+        }
+
+        // Function to upload files
+        function uploadFile(generatedApplicantNumber) {
+            $('input[type="file"][required]').each(function(index, element) {
+                var files = element.files;
+                var inputId = $(this).attr('id');
+                var inputName = $(this).attr('name');
+                var prefix = '';
+
+                // Check each inputId separately
+                if (inputId === 'file1') {
+                    prefix = 'application_form';
+                }
+
+                if (inputId === 'file2') {
+                    prefix = 'notarized_form';
+                }
+
+                // Check each inputId separately
+                if (inputId === 'file3') {
+                    prefix = 'attestation_paper';
+                }
+
+                if (inputId === 'file4') {
+                    prefix = 'lto_or_cr';
+                }
+                
+                if (inputId === 'file5') {
+                    prefix = 'certificate_of_conformity';
+                }
+
+                if (inputId === 'file6') {
+                    prefix = 'affidavit_of_undertaking';
+                }
+                if (inputId === 'file7') {
+                    prefix = 'certificate_of_year_model_jao_2024_02_TH';
+                }
+
+                if (inputId === 'file8') {
+                    prefix = 'certificate_of_business_name';
+                }
+
+                if (inputId === 'file9') {
+                    prefix = 'proof_of_filipino_citizenship';
+                }
+
+                if (inputId === 'file10') {
+                    prefix = 'articles_of_partnership_incorporations_and_by_laws';
+                }
+
+                if (inputId === 'file11') {
+                    prefix = 'certificate_of_registration1';
+                }
+                
+                if (inputId === 'file12') {
+                    prefix = 'articles_of_cooperation_and_by_laws';
+                }
+
+                if (inputId === 'file13') {
+                    prefix = 'certificate_of_registration2';
+                }
+
+                if (inputId === 'file14') {
+                    prefix = 'certificate_of_good_standing';
+                }
+
+                if (inputId === 'file15') {
+                    prefix = 'tct_or_tax_declaration';
+                }
+
+                if (inputId === 'file16') {
+                    prefix = 'contract_of_lease_authority';
+                }
+
+                if (inputId === 'file17') {
+                    prefix = 'income_tax_return_of_registration_bir';
+                }
+
+                if (inputId === 'file18') {
+                    prefix = 'proof_of_bank_deposit1';
+                }
+
+                if (inputId === 'file19') {
+                    prefix = 'proof_of_bank_deposit2';
+                }
+
+                if (inputId === 'file20') {
+                    prefix = 'audited_financial_statement';
+                }
+
+                if (inputId === 'file21') {
+                    prefix = 'ltfrb_inspection_report';
+                }  
+
+                if (inputId === 'file22') {
+                    prefix = 'fleet_management_system';
+                }  
+
+                if (inputId === 'file23') {
+                    prefix = 'afcs';
+                }  
+
+                if (inputId === 'file24') {
+                    prefix = 'undertaking_to_with_afcs';
+                }  
+                
+                if (inputId === 'file25') {
+                    prefix = 'MC_2020-076';
+                }  
+
+                if (inputId === 'file26') {
+                    prefix = 'ots';
+                }  
+
+                if (inputId === 'file27') {
+                    prefix = 'ednorsement_letter_dotr_dot';
+                }  
+
+                if (inputId === 'file28') {
+                    prefix = 'school_approval_letter';
+                }  
+
+                if (inputId === 'file29') {
+                    prefix = 'proof_of_public_need';
+                }  
+
+                if (inputId === 'file30') {
+                    prefix = 'shuttle_service_contract';
+                }  
+
+                if (inputId === 'file31') {
+                    prefix = 'proof_certificate_of_existence_of_endpoint_terminals';
+                }  
+
+
+                // Iterate over each file selected in the input
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var fileName = file.name;
+                    var fileExt = fileName.split('.').pop(); // Get file extension
+                    var newName = generatedApplicantNumber + '_' + prefix + '_' + i + '.' + fileExt;
+        
+                    formData.append(inputName + '[' + i + ']', file, newName); // Append file with the new name
+                }
+            });
+
+            formData.append('applicantNumber', generatedApplicantNumber);
+            console.log(formData);
+            // Perform AJAX request to upload files
+            $.ajax({
+                url: '../../controller/application_management/uploadApplicationFile.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    // Any actions before sending request
+                },
+                success: function(response) {
+                    console.log('File upload successful:', response);
+                    // Handle success response as needed
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error uploading files:', error);
+                    // Handle error case
+                }
+            });
+        }
+
+        // Call generateApplicantNumber to get the number and then upload files
+        generateApplicantNumber(function(applicantNumber) {
+            if (applicantNumber) {
+                console.log('Generated Applicant Number:', applicantNumber);
+                uploadFile(applicantNumber);
+            } else {
+                console.log('Failed to generate applicant number.');
+            }
+        });
+    });
+
+    // Additional event handlers for form elements
+    // Handle question change events as needed
+});

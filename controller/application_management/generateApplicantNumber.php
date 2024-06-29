@@ -69,7 +69,7 @@ try {
     $newApplicationNumber = generateUniqueApplicationNumber($pdo);
 
     // Output or use the unique application number
-    echo "Unique Application Number: " . $newApplicationNumber;
+    echo $newApplicationNumber;
 } catch (Exception $e) {
     // Handle exceptions (e.g., failed to generate unique number)
     error_log("Error generating application number: " . $e->getMessage());
