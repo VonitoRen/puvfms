@@ -1,7 +1,10 @@
+
+
 $(document).ready(function() {
     // Setting file input attributes
     $('input[type="file"]').attr('accept', '.pdf,.docx,.xlsx,.jpeg,.png');
     $('input[type="file"]').attr('required', true);
+    $('select').attr('required', true);
     $('select').attr('required', true);
     $('input[type="file"]').attr('accept', '.pdf,.docx,.xlsx,.jpeg,.png');
     $('input[type="file"]').attr('required', true);
@@ -273,121 +276,6 @@ $(document).ready(function() {
                 var inputName = $(this).attr('name');
                 var prefix = '';
 
-                // Assign prefix based on inputId
-                // Add your prefix logic here as per your requirement
-
-                // Iterate over each file selected in the input
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    var fileName = file.name;
-                    var fileExt = fileName.split('.').pop(); // Get file extension
-                    var newName = generatedApplicantNumber + '_' + prefix + '_' + i + '.' + fileExt;
-
-                    formData.append(inputName, file, newName); // Append file with the new name
-                }
-            });
-
-            formData.append('applicantNumber', generatedApplicantNumber);
-
-            // Perform AJAX request to upload files
-            $.ajax({
-                url: '../../controller/application_management/uploadApplicationFile.php',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function() {
-                    // Any actions before sending request
-                },
-                success: function(response) {
-                    console.log('File upload successful:', response);
-                    // Handle success response as needed
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error uploading files:', error);
-                    // Handle error case
-                }
-            });
-        }
-
-        // Call generateApplicantNumber to get the number and then upload files
-        generateApplicantNumber(function(applicantNumber) {
-            if (applicantNumber) {
-                console.log('Generated Applicant Number:', applicantNumber);
-                uploadFile(applicantNumber);
-            } else {
-                console.log('Failed to generate applicant number.');
-            }
-        });
-    });
-
-    // Additional event handlers for form elements
-    // Handle question change events as needed
-});
-
-
-
-$(document).ready(function() {
-    // Setting file input attributes
-    $('input[type="file"]').attr('accept', '.pdf,.docx,.xlsx,.jpeg,.png');
-    $('input[type="file"]').attr('required', true);
-    $('select').attr('required', true);
-
-    // Function to generate applicant number
-    function generateApplicantNumber(callback) {
-        $.ajax({
-            url: '../../controller/application_management/generateApplicantNumber.php',
-            type: 'post',
-            success: function(response) {
-                var applicantNumber = response.trim();
-                callback(applicantNumber); // Pass applicantNumber to callback function
-            },
-            error: function(xhr, status, error) {
-                console.error('Error generating applicant number:', error);
-                callback(null); // Handle error case
-            }
-        });
-    }
-
-    // Event handler for form submission
-    $('#newCPCStatusSubmitBtn').on('click', function(e) {
-        e.preventDefault();
-        var formData = new FormData();
-        
-        // Check for empty required fields
-        var isEmpty = false;
-        $('#newCPCForm input[required], #newCPCForm select[required]').each(function() {
-            $(this).removeClass('is-valid is-invalid');
-            if ($(this).is(':visible')) {
-                if ($(this).val() === null || $(this).val() === "") {
-                    isEmpty = true;
-                    $(this).addClass('is-invalid');
-                } else {
-                    if ($(this).attr('type') === 'file') {
-                        var files = $(this)[0].files;
-                        for (var i = 0; i < files.length; i++) {
-                            formData.append($(this).attr('id') + '[]', files[i]);
-                        }
-                    } else {
-                        formData.append($(this).attr('id'), $(this).val());
-                    }
-                }
-            }
-        });
-
-        if (isEmpty) {
-            console.log("Please fill in all required fields.");
-            return;
-        }
-
-        // Function to upload files
-        function uploadFile(generatedApplicantNumber) {
-            $('input[type="file"][required]').each(function(index, element) {
-                var files = element.files;
-                var inputId = $(this).attr('id');
-                var inputName = $(this).attr('name');
-                var prefix = '';
-
                 // Check each inputId separately
                 if (inputId === 'file1') {
                     prefix = 'application_form';
@@ -523,6 +411,10 @@ $(document).ready(function() {
         
                     formData.append(inputName + '[' + i + ']', file, newName); // Append file with the new name
                 }
+                formData.forEach(function(value, key) {
+                    console.log(key, value);
+                });
+                
             });
 
             formData.append('applicantNumber', generatedApplicantNumber);
