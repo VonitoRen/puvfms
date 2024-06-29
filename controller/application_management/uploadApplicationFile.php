@@ -35,6 +35,9 @@ function uploadFilesAndStorePaths($applicantNumber, $files, $pdo) {
                     $filePath = $targetFilePath;
                     $stmt = $pdo->prepare("INSERT INTO tbl_document_upload (applicant_number, file_path) VALUES (?, ?)");
                     $stmt->execute([$applicantNumber, $filePath]);
+
+
+
                     $filePaths[] = $filePath; // Store file path for potential use/display
                 } else {
                     echo "Error uploading file $fileName.";
@@ -57,6 +60,9 @@ function uploadFilesAndStorePaths($applicantNumber, $files, $pdo) {
         }
     }
 
+    $stmt = $pdo->prepare("INSERT INTO tbl_application (application_number, application_status_id) VALUES (?, ?)");
+    $stmt->execute([$applicantNumber, '3']);
+    
     return $filePaths;
 }
 

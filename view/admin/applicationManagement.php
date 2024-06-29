@@ -25,7 +25,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="../../assets/js/jquery-3.7.1.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
@@ -120,121 +120,135 @@
 <script>
 
   // Displaying of DATA 
-
-        
-        function fetchApplication() {
-            $.ajax({
-                url: '../../controller/application_management/fetchApplication.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    var tbody = $('#applicationTableBody');
-                    tbody.empty(); // Clear the table body
-                    if (data.length === 0) {
-                        var noDataRow = `<tr>
-                            <td colspan="5" class="text-center">NO RECORD FOUND</td>
-                        </tr>`;
-                        tbody.append(noDataRow);
-                    } else {
+  $.noConflict();
+  jQuery(document).ready(function($) {  
+    function fetchApplication() {
+        $.ajax({
+            url: '../../controller/application_management/fetchApplication.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var tbody = $('#applicationTableBody');
+                tbody.empty(); // Clear the table body
+                if (data.length === 0) {
+                    var noDataRow = `<tr>
+                        <td colspan="5" class="text-center">NO RECORD FOUND</td>
+                    </tr>`;
+                    tbody.append(noDataRow);
+                } else {
                     data.forEach(function (application) {
                         var row = `<tr>
                             <td>${application.application_number}</td>
                             <td>${application.application_status_name}</td>
                             <td>${application.application_applied_at}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary view-button" data-toggle="modal" data-target="#viewApplicationModal" data-id="${application.application_number}" >View</button>
+                                <button class="btn btn-sm btn-primary view-button" data-toggle="modal" data-target="#viewApplicationModal" data-id="${application.application_number}">View</button>
                                 <button class="btn btn-sm btn-secondary edit-button" data-toggle="modal" data-target="#editApplicationModal" data-id="${application.application_number}">Edit</button>
                                 <button class="btn btn-sm btn-danger delete-button" data-toggle="modal" data-target="#deleteApplicationModal" data-id="${application.application_number}">Delete</button>                                
                             </td>
                         </tr>`;
                         tbody.append(row);
                     });
-                  }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error fetching data:', status, error);
                 }
-            });
-        }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching data:', status, error);
+            }
+        });
+    }
 
-        // Call fetchDocumentTypes on page load
-        fetchApplication();
-        
-
-        $('#addApplicationModal, #viewApplicationModal, #editApplicationModal, #deleteApplicationModal, .applicationAddCloseBtn').on('hidden.bs.modal', function (e) {
+    // Call fetchApplication on page load
+    fetchApplication();
+    
+    $('#addApplicationModal, #viewApplicationModal, #editApplicationModal, #deleteApplicationModal, .applicationAddCloseBtn').on('hidden.bs.modal', function (e) {
         $('.modal-backdrop').remove(); // Manually remove the backdrop
-        });    
-   
+    });    
 
-  //END OF DISPLAYING DATA
-  
-  //OPENING ADD APPLICATION STATUS MODAL
-        $('#addApplicationBtnModalShow').on('click', function(){
-          console.log('goods')
-          
-        })
-  //OPENING ADD APPLICATION STATUS MODAL
+    // Use event delegation to handle click events on dynamically created .view-button elements
+    $(document).on('click', '.view-button', function() {
+    // Get the modal element
+    var $modal = $('#filePreviewModal');
+    console.log('Modal:', $modal); // Check if modal is correctly selected
 
-  //VIEWING OF INFORMATION
-$(document).ready(function() {
-  $('.view-button').on('click', function() {
-    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application  ID
-    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application  Name
-    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Application  Description (hidden)
-    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Application  Created At
-    console.log('Application  ID:', statusId);
-    console.log('Application  Name:', statusName);
-    console.log('Application  Description:', statusDescription);
-    console.log('Application  Created At:', createdAt);
-    $('#applicationViewId').val(statusId)
-    $('#applicationViewName').val(statusName)
-    $('#applicationViewDescription').val(statusDescription)
-    $('#applicationViewCreatedAt').val(createdAt)
-    // Optionally, retrieve other data from the table row if needed
-    // var status = $(this).closest('tr').find('td:first').text(); 
-    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
-    
-    // Perform actions based on the button click
-    // For example, open a modal or navigate to another page
-    
-    // Example: Open a modal (replace '#viewModal' with your modal ID)
-    // $('#viewModal').modal('show');
-  });
+    // Get the iframe element
+    var $iframe = $('#filePreviewFrame');
 
-  $('.edit-button').on('click', function() {
-    var statusId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Application  ID
-    var statusName = $(this).closest('tr').find('td:eq(1)').text().trim(); // Application  Name
-    var statusDescription = $(this).closest('tr').find('td:eq(2)').text().trim(); // Application  Description (hidden)
-    var createdAt = $(this).closest('tr').find('td:eq(3)').text().trim(); // Application  Created At
-    console.log('Application  ID:', statusId);
-    console.log('Application  Name:', statusName);
-    console.log('Application  Description:', statusDescription);
-    console.log('Application  Created At:', createdAt);
-    $('#applicationEditId').val(statusId)
-    $('#applicationEditName').val(statusName)
-    $('#applicationEditDescription').val(statusDescription)
-    $('#applicationEditCreatedAt').val(createdAt)
-    // Optionally, retrieve other data from the table row if needed
-    // var status = $(this).closest('tr').find('td:first').text(); 
-    // var description = $(this).closest('tr').find('td:eq(1)').text(); 
-    
-    // Perform actions based on the button click
-    // For example, open a modal or navigate to another page
-    
-    // Example: Open a modal (replace '#viewModal' with your modal ID)
-    // $('#viewModal').modal('show');
-  });
+    // When the user clicks on <span> (x), close the modal
+    $modal.find('.close').on('click', function() {
+        console.log('Close button clicked');
+        $modal.hide();
+        $iframe.attr('src', ''); // Clear iframe src
+    });
+
+    // Function to open modal and load file content
+    function openFileModal(url) {
+        var fullPath = '../../controller/application_management/' + url;
+        console.log('Opening file:', fullPath); // Log the full URL for debugging
+        $modal.modal('show')
+        $iframe.attr('src', fullPath);
+    }
+
+        // Attach the function to the global window object so it can be called from anywhere
+        window.openFileModal = openFileModal;
+      
+        var applicantNumber = $(this).closest('tr').find('td:eq(0)').text().trim();
+        console.log(applicantNumber);
+        console.log('hello');
+
+        $.ajax({
+            url: '../../controller/application_management/fetchApplicationDocuments.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                applicant_number: applicantNumber
+            },
+            success: function(response) {
+                console.log(response.length);
+                console.log(response)
+                var fileContainer = $('#applicationForm');
+                fileContainer.empty(); // Clear the table body
+                if (response.length === 0) {
+                    var noDataRow = `<tr>
+                        <td colspan="5" class="text-center">NO RECORD FOUND</td>
+                    </tr>`;
+                    fileContainer.append(noDataRow);
+                } else {
+                  for (let index = 0; index < response.length; index++) {
+                    var filePath = response[index];
+                    var fileName = filePath.split('/').pop(); // Extract the file name from the path
+                    console.log(fileName);
+                    var truncatedName = (truncateFileName(fileName, 100)).substring(30); // Adjust the length as needed
+                    var fileLink = `<a class= "text-primary" "href="javascript:void(0);" onclick="openFileModal('${filePath}');">${truncatedName}</a><br>`;
+                    
+                    fileContainer.append(fileLink);
+                }
+                
+                // Function to truncate file name
+                function truncateFileName(fileName, maxLength) {
+                    if (fileName.length > maxLength) {
+                        return fileName.substr(0, maxLength) + '...'; // Truncate and add ellipsis if necessary
+                    }
+                    return fileName;
+                }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+                console.error('XHR:', xhr);
+            }
+        });
+    });
+
 });
-
 
   //   console.log($(this));
   // })
   //END OF VIEWING OF INFORMATION
 </script>
 <?php 
-include_once('applicationAddModal.php');
+
 include_once('applicationViewModal.php');
-include_once('applicationEditModal.php');
+
 ?>
   </body>
 </html>
