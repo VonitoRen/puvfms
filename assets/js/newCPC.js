@@ -10,6 +10,29 @@ $(document).ready(function() {
     $('input[type="file"]').attr('required', true);
     $('select').attr('required', true);
 
+    
+    $('select').each(function() {
+        $(this).on('change', function(){
+            $(this).removeClass('is-valid is-invalid');
+            if($(this).val() == ""){
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).addClass('is-valid');
+            }
+        });
+    });
+
+    $('input[type="file"]').each(function() {
+        $(this).on('change', function(){
+            $(this).removeClass('is-valid is-invalid');
+            if($(this).val() == ""){
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).addClass('is-valid');
+            }
+        });
+    });
+
     $('#newCPCForm input, #newCPCForm select').each(function() {
         $(this).prop('required', true);
     });
@@ -253,11 +276,14 @@ $(document).ready(function() {
                 } else {
                     if ($(this).attr('type') === 'file') {
                         var files = $(this)[0].files;
+                        $(this).addClass('is-valid');
                         for (var i = 0; i < files.length; i++) {
                             formData.append($(this).attr('id') + '[]', files[i]);
+                            
                         }
                     } else {
                         formData.append($(this).attr('id'), $(this).val());
+                        $(this).addClass('is-valid');
                     }
                 }
             }

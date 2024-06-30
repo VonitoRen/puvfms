@@ -24,15 +24,16 @@
             <div class="modal-body">
                 <!-- Edit user form content goes here -->
                 <form id="applicationForm" class="forms-sample" method="post">
-                    <hr>
-                    <button type="button" class="btn btn-primary mr-2" id="addApplicationSubmitBtn">
-                        Submit
+
+                </form>
+                <hr>
+                    <button type="button" class="btn btn-primary mr-2" id="verifyApplicationBtn">
+                        Verify
                     </button>
                     <button type="button" class="btn btn-dark applicationAddCloseBtn" data-dismiss="modal"
                         id="cancelBtn">
                         Cancel
                     </button>
-                </form>
             </div>
         </div>
     </div>
@@ -49,6 +50,8 @@
             </div>
             <div class="modal-body">
                 <!-- Iframe for file preview -->
+
+
                 <iframe id="filePreviewFrame" width="100%" height="800px"></iframe>
             </div>
         </div>

@@ -218,11 +218,22 @@
                     var fileName = filePath.split('/').pop(); // Extract the file name from the path
                     console.log(fileName);
                     var truncatedName = (truncateFileName(fileName, 100)).substring(30); // Adjust the length as needed
-                    var fileLink = `<a class= "text-primary" "href="javascript:void(0);" onclick="openFileModal('${filePath}');">${truncatedName}</a><br>`;
+                    var fileLink = `
+                    <div class= "row border mb-1 p-1">
+                        <div class= "col file-list">
+                            <a class= "text-primary " "href="javascript:void(0);" onclick="openFileModal('${filePath}');">${truncatedName}</a>
+                        </div>                        
+                    </div>
+                    `;
                     
                     fileContainer.append(fileLink);
                 }
-                
+                var addAdditionalDocument = `
+                    <a class="border btn form-control text-center">
+                       +
+                    </a>                        
+                    `;
+                fileContainer.append(addAdditionalDocument)
                 // Function to truncate file name
                 function truncateFileName(fileName, maxLength) {
                     if (fileName.length > maxLength) {
