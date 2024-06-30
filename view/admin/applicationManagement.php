@@ -200,7 +200,7 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                applicant_number: applicantNumber
+                application_number:  $(this).closest('tr').find('td:eq(0)').text().trim()
             },
             success: function(response) {
                 console.log(response.length);

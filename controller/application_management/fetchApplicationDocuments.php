@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once "../../static/conn.php"; 
-$_POST['application_number'] = '20240629026207737039949755231';
+
 function fetchFilePaths($applicantNumber, $pdo) {
     // Prepare SQL statement to fetch file paths for given applicantNumber
     $stmt = $pdo->prepare("SELECT file_path FROM tbl_document_upload WHERE applicant_number = ?");
